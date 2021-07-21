@@ -1,48 +1,28 @@
+import { Button, Flex, Grid, GridItem } from "@chakra-ui/react";
 import {
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Image,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { ITEMS_MAP, useCart, useRoutineEssentals } from "../database";
+  ITEMS_MAP,
+  RoutineEssentialItem,
+  useCart,
+  useRoutineEssentals,
+} from "../database";
 import React from "react";
 import ItemRow from "../components/Item/ItemRow";
+import ExploreSidebar from "../components/Explore/ExploreSidebar";
+
 import { ItemDetails } from "../constants/item";
-import Rating from "react-rating";
 
-export default function Explore(): React.ReactElement {
-  const [cart, setCart] = React.useState<[string, number][]>([]);
+export default function Explore({
+  cart,
+  routineEssentials,
+  setCart,
+}: {
+  cart: Record<string, number>;
+  routineEssentials: RoutineEssentialItem[];
+  setCart: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+}): React.ReactElement {
   const [items, setItems] = React.useState<React.ReactElement[]>([]);
-  const { add: addToCart } = useCart();
-
-  const [routineEssentials, setRoutineEssentials] = React.useState<
-    [string, {}][]
-  >([]);
-
   const [itemSelected, setItemSelected] =
     React.useState<ItemDetails | null>(null);
-
-  const { get: getCart } = useCart();
-  const { add: addToRoutineEssentals, get: getRoutineEssentals } =
-    useRoutineEssentals();
-
-  // Make cart & routineEssential data up to date
-  React.useEffect(() => {
-    async function refreshData() {
-      const cartData = (await getCart()) ?? {};
-      const cartArray: [string, number][] = Object.entries(cartData);
-      setCart(cartArray);
-
-      const routineData = (await getRoutineEssentals()) ?? {};
-      const routineArray: [string, {}][] = Object.entries(routineData);
-      setRoutineEssentials(routineArray);
-    }
-    refreshData();
-  }, []);
 
   // Make return items
   React.useEffect(() => {
@@ -53,22 +33,13 @@ export default function Explore(): React.ReactElement {
           item={value}
           key={key}
           onClick={() => setItemSelected(ITEMS_MAP.get(key) as ItemDetails)}
+          cart={cart}
+          routineEssentials={routineEssentials}
         />
       );
     });
     setItems(newItems);
-  }, [items, setItems]);
-
-  const addItemToCart = () => {
-    if (itemSelected !== null) {
-      addToCart({ itemId: itemSelected.id, count: 0 });
-    }
-  };
-  const addItemToRoutineEssentials = () => {
-    if (itemSelected !== null) {
-      addToRoutineEssentals({ itemId: itemSelected.id });
-    }
-  };
+  }, []);
 
   return (
     <Grid
@@ -104,62 +75,7 @@ export default function Explore(): React.ReactElement {
         top="60px"
       >
         {itemSelected == null ? null : (
-          <>
-            <Flex>
-              <Image src={itemSelected.image} boxSize="100px" mr={4} />
-              <Flex
-                flexDir="column"
-                textAlign="left"
-                justifyContent="center"
-                alignItems="flex-start"
-              >
-                <Heading as="h5" size="md" fontWeight={500}>
-                  {itemSelected.name}
-                </Heading>
-                <Rating
-                  readonly
-                  initialRating={itemSelected.rating}
-                  emptySymbol={
-                    <img
-                      src="/empty-star.svg"
-                      className="icon"
-                      width={24}
-                      height={24}
-                      alt="O"
-                    />
-                  }
-                  fullSymbol={
-                    <img
-                      src="/solid-star.svg"
-                      className="icon"
-                      width={24}
-                      height={24}
-                      alt="X"
-                    />
-                  }
-                />
-                <Flex justifyContent="space-between">
-                  <Stack direction={"row"} align={"center"}>
-                    <Text fontWeight={800} fontSize={"xl"}>
-                      ${itemSelected.price.default}
-                    </Text>
-                    <Text color={"gray.600"}>{itemSelected.price.unit}</Text>
-                  </Stack>
-                </Flex>
-              </Flex>
-            </Flex>
-
-            <Stack spacing={2} my={5}>
-              <Heading as="h5" size="sm" textAlign="left">
-                About This Item
-              </Heading>
-              <Text textAlign="left">{itemSelected.details.description}</Text>
-              <Button onClick={addItemToCart}>Add to Cart</Button>
-              <Button onClick={addItemToRoutineEssentials}>
-                Add to Routine Essential
-              </Button>
-            </Stack>
-          </>
+          <ExploreSidebar itemSelected={itemSelected} />
         )}
       </GridItem>
     </Grid>

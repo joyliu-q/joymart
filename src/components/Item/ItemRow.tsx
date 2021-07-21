@@ -23,25 +23,79 @@ import { ItemDetails } from "../../constants/item";
 import Rating from "react-rating";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import React from "react";
-import { useCart, useRoutineEssentals } from "../../database/";
+import {
+  RoutineEssentialItem,
+  useCart,
+  useRoutineEssentals,
+} from "../../database/";
 import { PlusSquareIcon, SmallCloseIcon } from "@chakra-ui/icons";
 
 export default function ItemRow({
   item,
   count,
   onClick,
+  cart,
+  routineEssentials,
 }: {
   item: ItemDetails;
   count?: number;
   onClick?: () => void;
+  cart: Record<string, number>;
+  routineEssentials: RoutineEssentialItem[];
 }) {
   const { get: getCart, add: addToCart, remove: removeFromCart } = useCart();
-  const { add: addToRoutineEssentals } = useRoutineEssentals();
-
-  const inCart: boolean = count !== null && count !== undefined;
+  const { add: addToRoutineEssentals, remove: removeFromRoutineEssentals } =
+    useRoutineEssentals();
+  const isCartPage: boolean = count !== null && count !== undefined;
   const [confirmDeleteOpen, setConfirmDeleteOpen] = React.useState(false);
-  const [isDeleted, setIsDeleted] = React.useState(false);
-  const [isAdded, setIsAdded] = React.useState(false);
+
+  const [showAddedBanner, setShowAddedBanner] = React.useState(false);
+  const [showDeletedBanner, setShowDeletedBanner] = React.useState(false);
+
+  const [inCart, setInCart] = React.useState(
+    cart[`${item.id}`] !== null && cart[`${item.id}`] !== undefined
+  );
+  const [inRoutineEssentials, setInRoutineEssentials] = React.useState(false);
+
+  const toggleItemInCart = () => {
+    if (inCart) {
+      removeFromCart({ itemId: item.id });
+      setConfirmDeleteOpen(false);
+      setShowDeletedBanner(true);
+
+      let newCart = cart;
+      delete newCart[`${item.id}`];
+
+      setShowAddedBanner(false);
+    } else {
+      addToCart({ itemId: item.id, count: 0 });
+      setShowDeletedBanner(false);
+      setShowAddedBanner(true);
+
+      let newCart = cart;
+      newCart[`${item.id}`] = 0;
+    }
+    setInCart(!inCart);
+  };
+  const toggleItemInRoutineEssentials = () => {
+    if (inRoutineEssentials) {
+      removeFromRoutineEssentals({ itemId: item.id });
+    } else {
+      addToRoutineEssentals({ itemId: item.id });
+    }
+    setInRoutineEssentials(!inRoutineEssentials);
+  };
+
+  const bgColor = useColorModeValue("white", "gray.800");
+
+  // Make cart & routineEssential data up to date
+  React.useEffect(() => {
+    setInCart(cart[`${item.id}`] !== null && cart[`${item.id}`] !== undefined);
+    setInRoutineEssentials(
+      routineEssentials[item.id] !== null &&
+        routineEssentials[item.id] !== undefined
+    );
+  }, [cart]);
 
   // Make cart & routineEssential data up to date
   React.useEffect(() => {
@@ -49,51 +103,30 @@ export default function ItemRow({
       const cartData = (await getCart()) ?? {};
       const itemIsInCart =
         cartData[item.id] !== null && cartData[item.id] !== undefined;
-      setIsAdded(itemIsInCart);
+      setInCart(itemIsInCart);
     }
     refreshData();
   }, []);
 
-  const deleteItemFromCart = () => {
-    removeFromCart({ itemId: item.id });
-    setConfirmDeleteOpen(!confirmDeleteOpen);
-    setIsDeleted(true);
-  };
-
-  const addItemToCart = () => {
-    addToCart({ itemId: item.id, count: 0 });
-    setIsAdded(true);
-  };
-
-  const addItemToRoutineEssentials = () => {
-    addToRoutineEssentals({ itemId: item.id });
-  };
-
-  const bgColor = useColorModeValue("white", "gray.800");
-
-  if (isDeleted) {
-    return (
-      <Center minHeight={12} minWidth="100%" bgColor="pink.200" my={2}>
-        <SmallCloseIcon mr={4} />
-        Item is deleted
-      </Center>
-    );
-  }
-
   return (
     <>
-      {isAdded ? (
+      {showAddedBanner ? (
         <Center
-          minHeight={12}
           minWidth="100%"
           bgColor="green.200"
           display="flex"
           transition="opacity 500ms"
           transitionDelay="3s"
-          my={2}
+          className="makeFadeOut"
         >
           <PlusSquareIcon mr={4} />
           Item is added
+        </Center>
+      ) : null}
+      {showDeletedBanner ? (
+        <Center minWidth="100%" bgColor="pink.200" className="makeFadeOut">
+          <SmallCloseIcon mr={4} />
+          Item is deleted
         </Center>
       ) : null}
       <Center py={12}>
@@ -146,7 +179,7 @@ export default function ItemRow({
             />
           </Box>
           <Stack textAlign="left" width="100%">
-            {inCart ? (
+            {isCartPage ? (
               <Flex flexDirection="row-reverse">
                 <Popover
                   returnFocusOnClose={false}
@@ -183,7 +216,7 @@ export default function ItemRow({
                         >
                           Cancel
                         </Button>
-                        <Button colorScheme="red" onClick={deleteItemFromCart}>
+                        <Button colorScheme="red" onClick={toggleItemInCart}>
                           Remove
                         </Button>
                       </ButtonGroup>
@@ -241,27 +274,81 @@ export default function ItemRow({
                 </Text>
                 <Text color={"gray.600"}>{item.price.unit}</Text>
               </Stack>
-              {inCart ? (
-                <Button onClick={addItemToRoutineEssentials}>
-                  Add to Routine Essential
+              {isCartPage ? (
+                // TODO: display "Added to Routine Essential if it's added"
+                <Button onClick={toggleItemInRoutineEssentials}>
+                  {inRoutineEssentials
+                    ? "Remove from Routine Essentials"
+                    : "Add to Routine Essentials"}
                 </Button>
+              ) : inCart ? (
+                <Popover
+                  returnFocusOnClose={false}
+                  autoFocus={false}
+                  isOpen={confirmDeleteOpen}
+                  onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
+                  placement="right"
+                  closeOnBlur={false}
+                >
+                  <PopoverTrigger>
+                    <Button
+                      variant={"ghost"}
+                      bgColor={"grey.100"}
+                      color={"gray.400"}
+                      _hover={{
+                        bgColor: "grey.100",
+                        color: "red",
+                      }}
+                      _active={{
+                        bgColor: "none",
+                      }}
+                      _focus={{ border: "none" }}
+                      onClick={() => setConfirmDeleteOpen(!confirmDeleteOpen)}
+                    >
+                      Remove from Cart
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverHeader fontWeight="semibold">
+                      Confirmation
+                    </PopoverHeader>
+                    <PopoverArrow />
+                    <PopoverBody>
+                      Are you sure you want to remove this item from cart?
+                    </PopoverBody>
+                    <PopoverFooter d="flex" justifyContent="flex-end">
+                      <ButtonGroup size="sm">
+                        <Button
+                          variant="outline"
+                          onClick={() =>
+                            setConfirmDeleteOpen(!confirmDeleteOpen)
+                          }
+                        >
+                          Cancel
+                        </Button>
+                        <Button colorScheme="red" onClick={toggleItemInCart}>
+                          Remove
+                        </Button>
+                      </ButtonGroup>
+                    </PopoverFooter>
+                  </PopoverContent>
+                </Popover>
               ) : (
                 <Button
-                  onClick={addItemToCart}
-                  variant={isAdded ? "ghost" : "solid"}
-                  bgColor={isAdded ? "grey.100" : "green.100"}
-                  color={isAdded ? "gray.400" : "green.500"}
+                  onClick={toggleItemInCart}
+                  variant={"solid"}
+                  bgColor={"green.100"}
+                  color={"green.500"}
                   _hover={{
-                    cursor: isAdded ? "default" : "pointer",
-                    bgColor: isAdded ? "grey.100" : "green.200",
-                    color: isAdded ? "grey.400" : "green.600",
+                    bgColor: "green.200",
+                    color: "green.600",
                   }}
                   _active={{
-                    bgColor: isAdded ? "none" : "green.300",
+                    bgColor: "green.300",
                   }}
                   _focus={{ border: "none" }}
                 >
-                  {isAdded ? "Added to Cart" : "Add to Cart"}
+                  Add to Cart
                 </Button>
               )}
             </Flex>

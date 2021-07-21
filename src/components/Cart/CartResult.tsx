@@ -1,12 +1,16 @@
 import { Text, Flex, Heading, Stack, Image, Button } from "@chakra-ui/react";
 import ItemRow from "../Item/ItemRow";
-import { ITEMS_MAP } from "../../database/index";
+import { ITEMS_MAP, RoutineEssentialItem } from "../../database/index";
 import React from "react";
 
 export default function CartResult({
   cart,
+  routineEssentials,
+  setCart,
 }: {
-  cart: [string, number][];
+  cart: Record<string, number>;
+  routineEssentials: RoutineEssentialItem[];
+  setCart: React.Dispatch<React.SetStateAction<Record<string, number>>>;
 }): React.ReactElement {
   return (
     <>
@@ -52,7 +56,7 @@ export default function CartResult({
           </Stack>
         </Stack>
       ) : null}
-      {cart.map((entry) => {
+      {Object.entries(cart).map((entry) => {
         console.log("entry");
         console.log(entry);
         const [id, count] = entry;
@@ -60,7 +64,15 @@ export default function CartResult({
         if (item == null) {
           return <Flex key={id}>Not Found: Item#{id}</Flex>;
         }
-        return <ItemRow key={id} item={item} count={count as number} />;
+        return (
+          <ItemRow
+            key={id}
+            item={item}
+            count={count as number}
+            cart={cart}
+            routineEssentials={routineEssentials}
+          />
+        );
       })}
     </>
   );

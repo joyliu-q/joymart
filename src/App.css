@@ -39,3 +39,21 @@
     transform: rotate(360deg);
   }
 }
+
+
+.makeFadeOut {
+	animation: fadeOut 2s;
+  opacity: 0;
+  height: 0;
+}
+
+@keyframes fadeOut {
+  from {
+  	opacity: 1;
+    height: inherit;
+  }
+  to {
+ 	  opacity: 0;
+     height: 0;
+    }
+}

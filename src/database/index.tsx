@@ -30,19 +30,24 @@ function returnAllItems(): Map<string, ItemDetails> {
 
 export const ITEMS_MAP = returnAllItems();
 
-/*
-  cart - shopping cart of the "user".
-    Datastructure
-    {
-      itemId: {
-        count: count,
-        ..
-      },
-      ..
-    }
-  Note: we don't have a user table or authentication for the prototype, so the cart is stored on the
+// CartItem - one singular entry
+/* In the future, if we want to add CartItem variants (e.g. color of shirt, flavor of soda, etc), we
+ * can add it as another attribute.
+ *
+ * Example
+ * {
+ *   itemId: {
+ *      count: number, (ADDED)
+ *      variant: string, (NOT ADDED)
+ *      ..
+ *   }
+ *   ..
+ * }
+ *
+ * Note: we don't have a user table or authentication for the prototype, so the cart is stored on the
   pseudouser's local machine using idb-keyval
 */
+export type CartItem = [string, number]; // string - id, number - count (number of items purchasing)
 export function useCart() {
   async function getCart() {
     return await get("cart");
@@ -99,6 +104,8 @@ export function useCart() {
   Note: we don't have a user table or authentication for the prototype, so RE is stored on the
   pseudouser's local machine using idb-keyval
 */
+export type RoutineEssentialItem = [string, {}]; // string - id, {} - empty array, if we want to add more attributes in the future, they go here
+
 export function useRoutineEssentals() {
   async function getRoutineEssentals() {
     return await get("routine-essentials");
