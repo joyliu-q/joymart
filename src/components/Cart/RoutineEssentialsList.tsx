@@ -1,10 +1,5 @@
 import { Text, Heading, Button, Box, Flex } from "@chakra-ui/react";
-import {
-  CartItem,
-  ITEMS_MAP,
-  RoutineEssentialItem,
-  useCart,
-} from "../../database/index";
+import { ITEMS_MAP, RoutineEssentialItem, useCart } from "../../database/index";
 import React from "react";
 import {
   AddIcon,
@@ -15,17 +10,15 @@ import {
 
 export default function RoutineEssentialsList({
   routineEssentials,
-  cart,
 }: {
   routineEssentials: RoutineEssentialItem[];
-  cart: Record<string, number>;
 }): React.ReactElement {
   const [routineIsCollapsed, setRoutineIsCollapsed] = React.useState(true);
 
   const { add: addToCart } = useCart();
 
   const addItemToCart = (id: string) => {
-    addToCart({ itemId: parseInt(id) ?? 0, count: 0 });
+    addToCart({ itemId: parseInt(id) ?? -1, count: 1 });
   };
 
   const handleAddAllToCart = () => {

@@ -36,12 +36,14 @@ export default function ItemRow({
   onClick,
   cart,
   routineEssentials,
+  hideOnDelete = false,
 }: {
   item: ItemDetails;
   count?: number;
   onClick?: () => void;
-  cart: Record<string, number>;
+  cart: Record<string, { count: number }>;
   routineEssentials: RoutineEssentialItem[];
+  hideOnDelete?: boolean;
 }) {
   const { get: getCart, add: addToCart, remove: removeFromCart } = useCart();
   const { add: addToRoutineEssentals, remove: removeFromRoutineEssentals } =
@@ -68,12 +70,12 @@ export default function ItemRow({
 
       setShowAddedBanner(false);
     } else {
-      addToCart({ itemId: item.id, count: 0 });
+      addToCart({ itemId: item.id, count: 1 });
       setShowDeletedBanner(false);
       setShowAddedBanner(true);
 
       let newCart = cart;
-      newCart[`${item.id}`] = 0;
+      newCart[`${item.id}`] = { count: 1 };
     }
     setInCart(!inCart);
   };
@@ -129,232 +131,234 @@ export default function ItemRow({
           Item is deleted
         </Center>
       ) : null}
-      <Center py={12}>
-        <Stack
-          direction="row"
-          spacing={12}
-          role={"group"}
-          p={6}
-          width={"100%"}
-          w={"full"}
-          bg={bgColor}
-          boxShadow={"2xl"}
-          rounded={"lg"}
-          pos={"relative"}
-          zIndex={1}
-          _hover={{
-            cursor: onClick == null ? "default" : "pointer",
-          }}
-          onClick={onClick}
-        >
-          <Box
+      {hideOnDelete && showDeletedBanner ? null : (
+        <Center py={12}>
+          <Stack
+            direction="row"
+            spacing={12}
+            role={"group"}
+            p={6}
+            width={"100%"}
+            w={"full"}
+            bg={bgColor}
+            boxShadow={"2xl"}
             rounded={"lg"}
-            mt={-12}
             pos={"relative"}
-            height={"230px"}
-            _after={{
-              transition: "all .3s ease",
-              content: '""',
-              w: "full",
-              h: "full",
-              pos: "absolute",
-              top: 5,
-              left: 0,
-              backgroundImage: `url(${item.image})`,
-              filter: "blur(15px)",
-              zIndex: -1,
+            zIndex={1}
+            _hover={{
+              cursor: onClick == null ? "default" : "pointer",
             }}
-            _groupHover={{
-              _after: {
-                filter: "blur(20px)",
-              },
-            }}
+            onClick={onClick}
           >
-            <Image
+            <Box
               rounded={"lg"}
-              height={230}
-              width={282}
-              objectFit={"cover"}
-              src={item.image}
-            />
-          </Box>
-          <Stack textAlign="left" width="100%">
-            {isCartPage ? (
-              <Flex flexDirection="row-reverse">
-                <Popover
-                  returnFocusOnClose={false}
-                  autoFocus={false}
-                  isOpen={confirmDeleteOpen}
-                  onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
-                  placement="right"
-                  closeOnBlur={false}
-                >
-                  <PopoverTrigger>
-                    <IconButton
-                      variant="ghost"
-                      aria-label="Call Sage"
-                      fontSize="32px"
-                      icon={<RiDeleteBin5Fill />}
-                      onClick={() => setConfirmDeleteOpen(!confirmDeleteOpen)}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverHeader fontWeight="semibold">
-                      Confirmation
-                    </PopoverHeader>
-                    <PopoverArrow />
-                    <PopoverBody>
-                      Are you sure you want to remove this item from cart?
-                    </PopoverBody>
-                    <PopoverFooter d="flex" justifyContent="flex-end">
-                      <ButtonGroup size="sm">
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            setConfirmDeleteOpen(!confirmDeleteOpen)
-                          }
-                        >
-                          Cancel
-                        </Button>
-                        <Button colorScheme="red" onClick={toggleItemInCart}>
-                          Remove
-                        </Button>
-                      </ButtonGroup>
-                    </PopoverFooter>
-                  </PopoverContent>
-                </Popover>
-                <Input
-                  defaultValue={count}
-                  maxWidth="50px"
-                  type="number"
-                  min="1"
-                  max="100"
-                  mr={1}
-                />
-              </Flex>
-            ) : null}
-            <Text
-              color={"gray.500"}
-              fontSize={"sm"}
-              textTransform={"uppercase"}
+              mt={-12}
+              pos={"relative"}
+              height={"230px"}
+              _after={{
+                transition: "all .3s ease",
+                content: '""',
+                w: "full",
+                h: "full",
+                pos: "absolute",
+                top: 5,
+                left: 0,
+                backgroundImage: `url(${item.image})`,
+                filter: "blur(15px)",
+                zIndex: -1,
+              }}
+              _groupHover={{
+                _after: {
+                  filter: "blur(20px)",
+                },
+              }}
             >
-              Brand
-            </Text>
-            <Heading fontSize={"2xl"} fontWeight={500}>
-              {item.name}
-            </Heading>
-            <Box>
-              <Rating
-                readonly
-                initialRating={item.rating}
-                emptySymbol={
-                  <img
-                    src="/empty-star.svg"
-                    className="icon"
-                    width={24}
-                    height={24}
-                    alt="O"
-                  />
-                }
-                fullSymbol={
-                  <img
-                    src="/solid-star.svg"
-                    className="icon"
-                    width={24}
-                    height={24}
-                    alt="X"
-                  />
-                }
+              <Image
+                rounded={"lg"}
+                height={230}
+                width={282}
+                objectFit={"cover"}
+                src={item.image}
               />
             </Box>
-            <Flex justifyContent="space-between">
-              <Stack direction={"row"} align={"center"}>
-                <Text fontWeight={800} fontSize={"xl"}>
-                  ${item.price.default}
-                </Text>
-                <Text color={"gray.600"}>{item.price.unit}</Text>
-              </Stack>
+            <Stack textAlign="left" width="100%">
               {isCartPage ? (
-                // TODO: display "Added to Routine Essential if it's added"
-                <Button onClick={toggleItemInRoutineEssentials}>
-                  {inRoutineEssentials
-                    ? "Remove from Routine Essentials"
-                    : "Add to Routine Essentials"}
-                </Button>
-              ) : inCart ? (
-                <Popover
-                  returnFocusOnClose={false}
-                  autoFocus={false}
-                  isOpen={confirmDeleteOpen}
-                  onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
-                  placement="right"
-                  closeOnBlur={false}
-                >
-                  <PopoverTrigger>
-                    <Button
-                      variant={"ghost"}
-                      bgColor={"grey.100"}
-                      color={"gray.400"}
-                      _hover={{
-                        bgColor: "grey.100",
-                        color: "red",
-                      }}
-                      _active={{
-                        bgColor: "none",
-                      }}
-                      _focus={{ border: "none" }}
-                      onClick={() => setConfirmDeleteOpen(!confirmDeleteOpen)}
-                    >
-                      Remove from Cart
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverHeader fontWeight="semibold">
-                      Confirmation
-                    </PopoverHeader>
-                    <PopoverArrow />
-                    <PopoverBody>
-                      Are you sure you want to remove this item from cart?
-                    </PopoverBody>
-                    <PopoverFooter d="flex" justifyContent="flex-end">
-                      <ButtonGroup size="sm">
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            setConfirmDeleteOpen(!confirmDeleteOpen)
-                          }
-                        >
-                          Cancel
-                        </Button>
-                        <Button colorScheme="red" onClick={toggleItemInCart}>
-                          Remove
-                        </Button>
-                      </ButtonGroup>
-                    </PopoverFooter>
-                  </PopoverContent>
-                </Popover>
-              ) : (
-                <Button
-                  onClick={toggleItemInCart}
-                  variant={"solid"}
-                  bgColor={"green.100"}
-                  color={"green.500"}
-                  _hover={{
-                    bgColor: "green.200",
-                    color: "green.600",
-                  }}
-                  _active={{
-                    bgColor: "green.300",
-                  }}
-                  _focus={{ border: "none" }}
-                >
-                  Add to Cart
-                </Button>
-              )}
-            </Flex>
+                <Flex flexDirection="row-reverse">
+                  <Popover
+                    returnFocusOnClose={false}
+                    autoFocus={false}
+                    isOpen={confirmDeleteOpen}
+                    onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
+                    placement="right"
+                    closeOnBlur={false}
+                  >
+                    <PopoverTrigger>
+                      <IconButton
+                        variant="ghost"
+                        aria-label="Call Sage"
+                        fontSize="32px"
+                        icon={<RiDeleteBin5Fill />}
+                        onClick={() => setConfirmDeleteOpen(!confirmDeleteOpen)}
+                      />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverHeader fontWeight="semibold">
+                        Confirmation
+                      </PopoverHeader>
+                      <PopoverArrow />
+                      <PopoverBody>
+                        Are you sure you want to remove this item from cart?
+                      </PopoverBody>
+                      <PopoverFooter d="flex" justifyContent="flex-end">
+                        <ButtonGroup size="sm">
+                          <Button
+                            variant="outline"
+                            onClick={() =>
+                              setConfirmDeleteOpen(!confirmDeleteOpen)
+                            }
+                          >
+                            Cancel
+                          </Button>
+                          <Button colorScheme="red" onClick={toggleItemInCart}>
+                            Remove
+                          </Button>
+                        </ButtonGroup>
+                      </PopoverFooter>
+                    </PopoverContent>
+                  </Popover>
+                  <Input
+                    defaultValue={count}
+                    maxWidth="50px"
+                    type="number"
+                    min="1"
+                    max="100"
+                    mr={1}
+                  />
+                </Flex>
+              ) : null}
+              <Text
+                color={"gray.500"}
+                fontSize={"sm"}
+                textTransform={"uppercase"}
+              >
+                Brand
+              </Text>
+              <Heading fontSize={"2xl"} fontWeight={500}>
+                {item.name}
+              </Heading>
+              <Box>
+                <Rating
+                  readonly
+                  initialRating={item.rating}
+                  emptySymbol={
+                    <img
+                      src="/empty-star.svg"
+                      className="icon"
+                      width={24}
+                      height={24}
+                      alt="O"
+                    />
+                  }
+                  fullSymbol={
+                    <img
+                      src="/solid-star.svg"
+                      className="icon"
+                      width={24}
+                      height={24}
+                      alt="X"
+                    />
+                  }
+                />
+              </Box>
+              <Flex justifyContent="space-between">
+                <Stack direction={"row"} align={"center"}>
+                  <Text fontWeight={800} fontSize={"xl"}>
+                    ${item.price.default}
+                  </Text>
+                  <Text color={"gray.600"}>{item.price.unit}</Text>
+                </Stack>
+                {isCartPage ? (
+                  // TODO: display "Added to Routine Essential if it's added"
+                  <Button onClick={toggleItemInRoutineEssentials}>
+                    {inRoutineEssentials
+                      ? "Remove from Routine Essentials"
+                      : "Add to Routine Essentials"}
+                  </Button>
+                ) : inCart ? (
+                  <Popover
+                    returnFocusOnClose={false}
+                    autoFocus={false}
+                    isOpen={confirmDeleteOpen}
+                    onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
+                    placement="right"
+                    closeOnBlur={false}
+                  >
+                    <PopoverTrigger>
+                      <Button
+                        variant={"ghost"}
+                        bgColor={"grey.100"}
+                        color={"gray.400"}
+                        _hover={{
+                          bgColor: "grey.100",
+                          color: "red",
+                        }}
+                        _active={{
+                          bgColor: "none",
+                        }}
+                        _focus={{ border: "none" }}
+                        onClick={() => setConfirmDeleteOpen(!confirmDeleteOpen)}
+                      >
+                        Remove from Cart
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverHeader fontWeight="semibold">
+                        Confirmation
+                      </PopoverHeader>
+                      <PopoverArrow />
+                      <PopoverBody>
+                        Are you sure you want to remove this item from cart?
+                      </PopoverBody>
+                      <PopoverFooter d="flex" justifyContent="flex-end">
+                        <ButtonGroup size="sm">
+                          <Button
+                            variant="outline"
+                            onClick={() =>
+                              setConfirmDeleteOpen(!confirmDeleteOpen)
+                            }
+                          >
+                            Cancel
+                          </Button>
+                          <Button colorScheme="red" onClick={toggleItemInCart}>
+                            Remove
+                          </Button>
+                        </ButtonGroup>
+                      </PopoverFooter>
+                    </PopoverContent>
+                  </Popover>
+                ) : (
+                  <Button
+                    onClick={toggleItemInCart}
+                    variant={"solid"}
+                    bgColor={"green.100"}
+                    color={"green.500"}
+                    _hover={{
+                      bgColor: "green.200",
+                      color: "green.600",
+                    }}
+                    _active={{
+                      bgColor: "green.300",
+                    }}
+                    _focus={{ border: "none" }}
+                  >
+                    Add to Cart
+                  </Button>
+                )}
+              </Flex>
+            </Stack>
           </Stack>
-        </Stack>
-      </Center>
+        </Center>
+      )}
     </>
   );
 }

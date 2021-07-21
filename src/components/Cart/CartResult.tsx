@@ -8,16 +8,18 @@ export default function CartResult({
   routineEssentials,
   setCart,
 }: {
-  cart: Record<string, number>;
+  cart: Record<string, { count: number }>;
   routineEssentials: RoutineEssentialItem[];
-  setCart: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+  setCart: React.Dispatch<
+    React.SetStateAction<Record<string, { count: number }>>
+  >;
 }): React.ReactElement {
   return (
     <>
       <Heading as="h1" textAlign="left">
         My Cart
       </Heading>
-      {cart.length === 0 ? (
+      {Object.entries(cart).length === 0 ? (
         <Stack
           p={12}
           display="flex"
@@ -57,9 +59,7 @@ export default function CartResult({
         </Stack>
       ) : null}
       {Object.entries(cart).map((entry) => {
-        console.log("entry");
-        console.log(entry);
-        const [id, count] = entry;
+        const [id, { count }] = entry;
         const item = ITEMS_MAP.get(id);
         if (item == null) {
           return <Flex key={id}>Not Found: Item#{id}</Flex>;
@@ -71,6 +71,7 @@ export default function CartResult({
             count={count as number}
             cart={cart}
             routineEssentials={routineEssentials}
+            hideOnDelete
           />
         );
       })}

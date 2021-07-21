@@ -1,10 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import {
-  CartItem,
-  RoutineEssentialItem,
-  useCart,
-  useRoutineEssentals,
-} from "../database/index";
+import { RoutineEssentialItem } from "../database/index";
 import React from "react";
 import CartResult from "../components/Cart/CartResult";
 import CartSidebar from "../components/Cart/CartSidebar";
@@ -14,9 +9,11 @@ export default function Cart({
   routineEssentials,
   setCart,
 }: {
-  cart: Record<string, number>;
+  cart: Record<string, { count: number }>;
   routineEssentials: RoutineEssentialItem[];
-  setCart: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+  setCart: React.Dispatch<
+    React.SetStateAction<Record<string, { count: number }>>
+  >;
 }): React.ReactElement {
   return (
     <Grid templateColumns="repeat(12, 1fr)" gap={3} px={4}>

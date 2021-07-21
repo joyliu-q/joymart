@@ -7,7 +7,7 @@ export default function CartSidebar({
   cart,
   routineEssentials,
 }: {
-  cart: Record<string, number>;
+  cart: Record<string, { count: number }>;
   routineEssentials: [string, {}][];
 }): React.ReactElement {
   const [subtotal, setSubtotal] = React.useState(0);
@@ -18,10 +18,12 @@ export default function CartSidebar({
       let total = 0;
 
       Object.entries(cart).forEach((entry) => {
-        const [id, count] = entry;
+        const [id, { count }] = entry;
         const item = ITEMS_MAP.get(id);
         if (item !== null && item !== undefined) {
-          total = total + item.price.default * (count as number);
+          total = total + item.price.default * count;
+          console.log(count);
+          console.log(item);
         }
       });
       setSubtotal(Math.round(total * 100) / 100);
@@ -60,10 +62,7 @@ export default function CartSidebar({
           Continue to check out
         </Button>
       </Stack>
-      <RoutineEssentialsList
-        routineEssentials={routineEssentials}
-        cart={cart}
-      />
+      <RoutineEssentialsList routineEssentials={routineEssentials} />
     </Box>
   );
 }

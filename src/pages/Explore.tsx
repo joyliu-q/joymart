@@ -16,9 +16,11 @@ export default function Explore({
   routineEssentials,
   setCart,
 }: {
-  cart: Record<string, number>;
+  cart: Record<string, { count: number }>;
   routineEssentials: RoutineEssentialItem[];
-  setCart: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+  setCart: React.Dispatch<
+    React.SetStateAction<Record<string, { count: number }>>
+  >;
 }): React.ReactElement {
   const [items, setItems] = React.useState<React.ReactElement[]>([]);
   const [itemSelected, setItemSelected] =
