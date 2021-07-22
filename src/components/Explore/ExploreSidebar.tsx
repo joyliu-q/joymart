@@ -58,7 +58,7 @@ export default function ExploreSidebar({
 
       <Stack spacing={2} my={5}>
         <Heading as="h5" size="sm" textAlign="left">
-          About This Item sdaadasdasd
+          About This Item
         </Heading>
         <Text textAlign="left">{itemSelected.details.description}</Text>
       </Stack>

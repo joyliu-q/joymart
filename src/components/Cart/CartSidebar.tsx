@@ -22,8 +22,6 @@ export default function CartSidebar({
         const item = ITEMS_MAP.get(id);
         if (item !== null && item !== undefined) {
           total = total + item.price.default * count;
-          console.log(count);
-          console.log(item);
         }
       });
       setSubtotal(Math.round(total * 100) / 100);
@@ -62,7 +60,10 @@ export default function CartSidebar({
           Continue to check out
         </Button>
       </Stack>
-      <RoutineEssentialsList routineEssentials={routineEssentials} />
+      <RoutineEssentialsList
+        routineEssentials={routineEssentials}
+        cart={cart}
+      />
     </Box>
   );
 }

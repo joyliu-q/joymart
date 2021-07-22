@@ -1,4 +1,4 @@
-import { Text, Heading, Button, Box, Flex } from "@chakra-ui/react";
+import { Text, Heading, Button, Box, Flex, Checkbox } from "@chakra-ui/react";
 import { ITEMS_MAP, RoutineEssentialItem, useCart } from "../../database/index";
 import React from "react";
 import {
@@ -9,11 +9,16 @@ import {
 } from "@chakra-ui/icons";
 
 export default function RoutineEssentialsList({
+  cart,
   routineEssentials,
 }: {
+  cart: Record<string, { count: number }>;
   routineEssentials: RoutineEssentialItem[];
 }): React.ReactElement {
   const [routineIsCollapsed, setRoutineIsCollapsed] = React.useState(true);
+  const [checkedItems, setCheckedItems] = React.useState(
+    new Array(routineEssentials.length).fill(false)
+  );
 
   const { add: addToCart } = useCart();
 
@@ -21,29 +26,64 @@ export default function RoutineEssentialsList({
     addToCart({ itemId: parseInt(id) ?? -1, count: 1 });
   };
 
-  const handleAddAllToCart = () => {
-    routineEssentials.forEach((entry) => {
-      const [id] = entry;
-      addItemToCart(id);
-    });
+  const handleAddSelectedToCart = () => {
+    if (
+      numOfCheckedItems() === 0 ||
+      numOfCheckedItems() === routineEssentials.length
+    ) {
+      routineEssentials.forEach((entry) => {
+        const [id] = entry;
+        addItemToCart(id);
+      });
+    } else {
+      routineEssentials.forEach((entry, index) => {
+        const [id] = entry;
+        if (checkedItems[index] === true) {
+          addItemToCart(id);
+        }
+      });
+    }
+    window.location.reload();
   };
+
+  const numOfCheckedItems = () => {
+    let count = 0;
+    checkedItems.forEach((value) => {
+      if (value === true) {
+        count += 1;
+      }
+    });
+    return count;
+  };
+
+  React.useEffect(() => {
+    const newCheckedItems = checkedItems;
+
+    Object.entries(routineEssentials).map((entry, index) => {
+      const [id] = entry;
+      console.log(cart[id]);
+      if (cart[id] !== null && cart[id] !== undefined) {
+        newCheckedItems[index] = true;
+      }
+    });
+    setCheckedItems(newCheckedItems);
+  }, []);
   return (
     <>
       <Flex
         flexDir="column"
         alignItems="flex-start"
         bgColor="orange.100"
-        minHeight={routineIsCollapsed ? 24 : "calc(100% - 75px)"}
-        maxHeight="100%"
+        minHeight={routineIsCollapsed ? 12 : "calc(100% - 75px)"}
         width="100%"
         position="absolute"
         pt={8}
-        pb={20}
+        pb={12}
         bottom={0}
         transition="all .3s ease"
         _hover={{
+          pb: routineIsCollapsed ? 24 : 12,
           cursor: "pointer",
-          pb: routineIsCollapsed ? 24 : 20,
         }}
         onClick={() => setRoutineIsCollapsed(!routineIsCollapsed)}
       >
@@ -57,18 +97,32 @@ export default function RoutineEssentialsList({
           <Heading as="h3" textAlign="center">
             Routine Essentials
           </Heading>
-          <Flex flexDir="row" justifyContent="space-between">
-            <Button
-              variant="ghost"
-              _hover={{ bgColor: "none", color: "blue.500" }}
-              leftIcon={<AddIcon />}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAddAllToCart();
-              }}
-            >
-              <b>Add All to Cart</b>
-            </Button>
+          <Flex
+            flexDir="row"
+            justifyContent={
+              routineEssentials.length === 0 ? "flex-end" : "space-between"
+            }
+          >
+            {routineEssentials.length === 0 ? null : (
+              <Button
+                variant="ghost"
+                _hover={{ bgColor: "none", color: "blue.500" }}
+                leftIcon={<AddIcon />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddSelectedToCart();
+                }}
+              >
+                <b>
+                  Add{" "}
+                  {numOfCheckedItems() === routineEssentials.length ||
+                  numOfCheckedItems() === 0
+                    ? "All "
+                    : `${numOfCheckedItems()} Items `}
+                  to Cart
+                </b>
+              </Button>
+            )}
             {routineIsCollapsed ? (
               <ChevronDownIcon w={10} h={10} />
             ) : (
@@ -76,7 +130,6 @@ export default function RoutineEssentialsList({
             )}
           </Flex>
         </Flex>
-
         <Box
           width={0}
           height={0}
@@ -97,34 +150,44 @@ export default function RoutineEssentialsList({
         />
 
         {routineEssentials.length < 1 ? (
-          <>
+          <Flex
+            flexDirection="column"
+            justifyContent="flex-start"
+            width="100%"
+            position="absolute"
+            top={"20px"}
+            right={0}
+          >
             <Text mb={4}>Got items? Add them to Routine Essentials!</Text>
             <Button size="sm" variant="link" leftIcon={<QuestionIcon />}>
               What are Routine Essentials?
             </Button>
-          </>
+          </Flex>
         ) : (
           <>
             {Object.entries(routineEssentials)
               .slice(0, routineIsCollapsed ? 3 : routineEssentials.length)
-              .map((entry) => {
+              .map((entry, index) => {
                 const [id] = entry;
                 const item = ITEMS_MAP.get(id);
                 if (item == null) {
                   return null;
                 }
                 return (
-                  <Button
-                    variant="ghost"
-                    leftIcon={<AddIcon />}
-                    _hover={{ bgColor: "none" }}
+                  <Checkbox
                     key={id}
-                    onClick={(e) => {
+                    isChecked={checkedItems[index]}
+                    onChange={(e) => {
                       e.stopPropagation();
+                      let checkedItemsCopy = checkedItems;
+                      checkedItemsCopy[index] = e.target.checked;
+                      setCheckedItems(checkedItemsCopy);
                     }}
+                    mx={5}
+                    textAlign="left"
                   >
                     Add {item.name}
-                  </Button>
+                  </Checkbox>
                 );
               })}
           </>

@@ -54,6 +54,8 @@ export default function ItemRow({
   const [showAddedBanner, setShowAddedBanner] = React.useState(false);
   const [showDeletedBanner, setShowDeletedBanner] = React.useState(false);
 
+  const [itemCount, setItemCount] = React.useState(1);
+
   const [inCart, setInCart] = React.useState(
     cart[`${item.id}`] !== null && cart[`${item.id}`] !== undefined
   );
@@ -70,7 +72,7 @@ export default function ItemRow({
 
       setShowAddedBanner(false);
     } else {
-      addToCart({ itemId: item.id, count: 1 });
+      addToCart({ itemId: item.id, count: itemCount });
       setShowDeletedBanner(false);
       setShowAddedBanner(true);
 
@@ -86,17 +88,39 @@ export default function ItemRow({
       addToRoutineEssentals({ itemId: item.id });
     }
     setInRoutineEssentials(!inRoutineEssentials);
+    if (isCartPage) {
+      window.location.reload();
+    }
   };
 
   const bgColor = useColorModeValue("white", "gray.800");
 
+  const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setItemCount(parseInt(e.target.value) ?? 1);
+    if (isCartPage) {
+      addToCart({ itemId: item.id, count: parseInt(e.target.value) ?? 1 });
+    }
+  };
   // Make cart & routineEssential data up to date
   React.useEffect(() => {
     setInCart(cart[`${item.id}`] !== null && cart[`${item.id}`] !== undefined);
+
+    if (inCart) {
+      const { count } = cart[`${item.id}`];
+      setItemCount(count);
+    }
+
     setInRoutineEssentials(
       routineEssentials[item.id] !== null &&
         routineEssentials[item.id] !== undefined
     );
+    Object.entries(routineEssentials).forEach((entry, index) => {
+      const [id] = entry;
+      console.log(cart[id]);
+      if (cart[id] !== null && cart[id] !== undefined && id === `${item.id}`) {
+        setInRoutineEssentials(true);
+      }
+    });
   }, [cart]);
 
   // Make cart & routineEssential data up to date
@@ -182,8 +206,8 @@ export default function ItemRow({
               />
             </Box>
             <Stack textAlign="left" width="100%">
-              {isCartPage ? (
-                <Flex flexDirection="row-reverse">
+              <Flex flexDirection="row-reverse">
+                {isCartPage ? (
                   <Popover
                     returnFocusOnClose={false}
                     autoFocus={false}
@@ -226,16 +250,23 @@ export default function ItemRow({
                       </PopoverFooter>
                     </PopoverContent>
                   </Popover>
-                  <Input
-                    defaultValue={count}
-                    maxWidth="50px"
-                    type="number"
-                    min="1"
-                    max="100"
-                    mr={1}
-                  />
-                </Flex>
-              ) : null}
+                ) : null}
+                <Input
+                  defaultValue={count}
+                  value={itemCount}
+                  maxWidth="50px"
+                  type="number"
+                  min="1"
+                  max="100"
+                  mr={1}
+                  onChange={handleCountChange}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      window.location.reload();
+                    }
+                  }}
+                />
+              </Flex>
               <Text
                 color={"gray.500"}
                 fontSize={"sm"}
@@ -277,83 +308,102 @@ export default function ItemRow({
                   </Text>
                   <Text color={"gray.600"}>{item.price.unit}</Text>
                 </Stack>
-                {isCartPage ? (
-                  // TODO: display "Added to Routine Essential if it's added"
-                  <Button onClick={toggleItemInRoutineEssentials}>
+                <Flex>
+                  <Button
+                    mr={1}
+                    onClick={toggleItemInRoutineEssentials}
+                    variant={inRoutineEssentials ? "ghost" : "solid"}
+                    bgColor={"grey.100"}
+                    color={"gray.400"}
+                    _hover={{
+                      bgColor: "grey.100",
+                      color: inRoutineEssentials ? "red" : "green",
+                    }}
+                    _active={{
+                      bgColor: "none",
+                    }}
+                    _focus={{ border: "none" }}
+                  >
                     {inRoutineEssentials
                       ? "Remove from Routine Essentials"
                       : "Add to Routine Essentials"}
                   </Button>
-                ) : inCart ? (
-                  <Popover
-                    returnFocusOnClose={false}
-                    autoFocus={false}
-                    isOpen={confirmDeleteOpen}
-                    onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
-                    placement="right"
-                    closeOnBlur={false}
-                  >
-                    <PopoverTrigger>
-                      <Button
-                        variant={"ghost"}
-                        bgColor={"grey.100"}
-                        color={"gray.400"}
-                        _hover={{
-                          bgColor: "grey.100",
-                          color: "red",
-                        }}
-                        _active={{
-                          bgColor: "none",
-                        }}
-                        _focus={{ border: "none" }}
-                        onClick={() => setConfirmDeleteOpen(!confirmDeleteOpen)}
-                      >
-                        Remove from Cart
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <PopoverHeader fontWeight="semibold">
-                        Confirmation
-                      </PopoverHeader>
-                      <PopoverArrow />
-                      <PopoverBody>
-                        Are you sure you want to remove this item from cart?
-                      </PopoverBody>
-                      <PopoverFooter d="flex" justifyContent="flex-end">
-                        <ButtonGroup size="sm">
-                          <Button
-                            variant="outline"
-                            onClick={() =>
-                              setConfirmDeleteOpen(!confirmDeleteOpen)
-                            }
-                          >
-                            Cancel
-                          </Button>
-                          <Button colorScheme="red" onClick={toggleItemInCart}>
-                            Remove
-                          </Button>
-                        </ButtonGroup>
-                      </PopoverFooter>
-                    </PopoverContent>
-                  </Popover>
-                ) : (
-                  <Button
-                    onClick={toggleItemInCart}
-                    variant={"solid"}
-                    bgColor={"green.100"}
-                    color={"green.500"}
-                    _hover={{
-                      bgColor: "green.200",
-                      color: "green.600",
-                    }}
-                    _active={{
-                      bgColor: "green.300",
-                    }}
-                    _focus={{ border: "none" }}
-                  >
-                    Add to Cart
-                  </Button>
-                )}
+                  {isCartPage ? null : inCart ? (
+                    <Popover
+                      returnFocusOnClose={false}
+                      autoFocus={false}
+                      isOpen={confirmDeleteOpen}
+                      onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
+                      placement="right"
+                      closeOnBlur={false}
+                    >
+                      <PopoverTrigger>
+                        <Button
+                          variant={"ghost"}
+                          bgColor={"grey.100"}
+                          color={"gray.400"}
+                          _hover={{
+                            bgColor: "grey.100",
+                            color: "red",
+                          }}
+                          _active={{
+                            bgColor: "none",
+                          }}
+                          _focus={{ border: "none" }}
+                          onClick={() =>
+                            setConfirmDeleteOpen(!confirmDeleteOpen)
+                          }
+                        >
+                          Remove from Cart
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverHeader fontWeight="semibold">
+                          Confirmation
+                        </PopoverHeader>
+                        <PopoverArrow />
+                        <PopoverBody>
+                          Are you sure you want to remove this item from cart?
+                        </PopoverBody>
+                        <PopoverFooter d="flex" justifyContent="flex-end">
+                          <ButtonGroup size="sm">
+                            <Button
+                              variant="outline"
+                              onClick={() =>
+                                setConfirmDeleteOpen(!confirmDeleteOpen)
+                              }
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              colorScheme="red"
+                              onClick={toggleItemInCart}
+                            >
+                              Remove
+                            </Button>
+                          </ButtonGroup>
+                        </PopoverFooter>
+                      </PopoverContent>
+                    </Popover>
+                  ) : (
+                    <Button
+                      onClick={toggleItemInCart}
+                      variant={"solid"}
+                      bgColor={"green.100"}
+                      color={"green.500"}
+                      _hover={{
+                        bgColor: "green.200",
+                        color: "green.600",
+                      }}
+                      _active={{
+                        bgColor: "green.300",
+                      }}
+                      _focus={{ border: "none" }}
+                    >
+                      Add to Cart
+                    </Button>
+                  )}
+                </Flex>
               </Flex>
             </Stack>
           </Stack>
