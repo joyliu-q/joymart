@@ -4,8 +4,11 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
+import Welcome from "./pages/Welcome";
+
 import React from "react";
 import { RoutineEssentialItem, useCart, useRoutineEssentals } from "./database";
+
 function App() {
   const [cart, setCart] = React.useState<Record<string, { count: number }>>({});
   const [routineEssentials, setRoutineEssentials] = React.useState<
@@ -41,6 +44,9 @@ function App() {
                 routineEssentials={routineEssentials}
                 setCart={setCart}
               />
+            </Route>
+            <Route path="/welcome">
+              <Welcome />
             </Route>
             <Route path="/explore">
               <Explore

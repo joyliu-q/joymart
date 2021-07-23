@@ -28,7 +28,7 @@ export default function Home() {
         bottom={{
           base: "calc(50% + 12vh)",
           md: "calc(50% + 14vh)",
-          lg: "calc(50% + 24vh)",
+          lg: "calc(50% + 25vh)",
         }}
       >
         <Heading
@@ -67,7 +67,7 @@ export default function Home() {
           bg={"orange.400"}
           _hover={{ bg: "orange.500" }}
           as="a"
-          href="/explore"
+          href="/welcome"
           size="lg"
         >
           Start Shopping
