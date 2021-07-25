@@ -113,9 +113,6 @@ export default function ItemRow({
         routineEssentials[`${item.id}`] !== undefined
     );
 
-    console.log(item.id);
-
-    console.log(routineEssentials);
     if (inCart) {
       const { count } = cart[`${item.id}`];
       setItemCount(count);

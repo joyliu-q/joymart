@@ -20,7 +20,6 @@ export default function HomeTour() {
   React.useEffect(() => {
     async function checkIsShown() {
       const isShown = await tourIsShown({ tourName: "home-tour" });
-      console.log(isShown);
       setIsTourOpen(!isShown);
     }
     checkIsShown();
