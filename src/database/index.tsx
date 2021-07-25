@@ -111,8 +111,7 @@ export function useCart() {
   Note: we don't have a user table or authentication for the prototype, so RE is stored on the
   pseudouser's local machine using idb-keyval
 */
-export type RoutineEssentialItem = [string, {}]; // string - id, {} - empty array, if we want to add more attributes in the future, they go here
-export type RoutineEssentialItems = Record<string, {}>;
+export type RoutineEssentialItems = Record<string, {}>; // string - id, {} - empty array, if we want to add more attributes in the future, they go here
 
 export function useRoutineEssentals() {
   async function getRoutineEssentals() {

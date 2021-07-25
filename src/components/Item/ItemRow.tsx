@@ -25,7 +25,6 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import React from "react";
 import {
   CartItems,
-  RoutineEssentialItem,
   RoutineEssentialItems,
   useCart,
   useRoutineEssentals,
