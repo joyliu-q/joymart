@@ -1,7 +1,4 @@
 import {
-  Container,
-  Link,
-  Center,
   Image,
   Tooltip,
   Modal,
@@ -10,12 +7,10 @@ import {
   ModalContent,
   ModalCloseButton,
   ModalBody,
-  Box,
-  Flex,
-  Heading,
 } from "@chakra-ui/react";
 import React from "react";
 import {
+  CartItems,
   RoutineEssentialItem,
   useCart,
   useRoutineEssentals,
@@ -25,7 +20,7 @@ import Cart from "../../pages/Cart";
 export default function ShowCartButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [cart, setCart] = React.useState<Record<string, { count: number }>>({});
+  const [cart, setCart] = React.useState<CartItems>({});
   const [routineEssentials, setRoutineEssentials] = React.useState<
     RoutineEssentialItem[]
   >([]);
@@ -36,7 +31,7 @@ export default function ShowCartButton() {
   React.useEffect(() => {
     async function refreshData() {
       const cartData = (await getCart()) ?? {};
-      const cartArray: Record<string, { count: number }> = cartData;
+      const cartArray: CartItems = cartData;
       setCart(cartArray);
 
       const routineData = (await getRoutineEssentals()) ?? {};

@@ -24,6 +24,7 @@ import Rating from "react-rating";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import React from "react";
 import {
+  CartItems,
   RoutineEssentialItem,
   useCart,
   useRoutineEssentals,
@@ -41,7 +42,7 @@ export default function ItemRow({
   item: ItemDetails;
   count?: number;
   onClick?: () => void;
-  cart: Record<string, { count: number }>;
+  cart: CartItems;
   routineEssentials: RoutineEssentialItem[];
   hideOnDelete?: boolean;
 }) {

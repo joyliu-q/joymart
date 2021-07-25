@@ -12,7 +12,7 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import { ITEMS_MAP, RoutineEssentialItem } from "../database";
+import { CartItems, ITEMS_MAP, RoutineEssentialItem } from "../database";
 import React from "react";
 import ItemRow from "../components/Item/ItemRow";
 import ExploreSidebar from "../components/Explore/ExploreSidebar";
@@ -52,11 +52,9 @@ export default function Category({
   setCart,
 }: {
   category: string;
-  cart: Record<string, { count: number }>;
+  cart: CartItems;
   routineEssentials: RoutineEssentialItem[];
-  setCart: React.Dispatch<
-    React.SetStateAction<Record<string, { count: number }>>
-  >;
+  setCart: React.Dispatch<React.SetStateAction<CartItems>>;
 }): React.ReactElement {
   const [items, setItems] = React.useState<React.ReactElement[]>([]);
   const [itemSelected, setItemSelected] =

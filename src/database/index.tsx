@@ -39,7 +39,6 @@ function returnAllItems(): Map<string, ItemDetails> {
 
 export const ITEMS_MAP = returnAllItems();
 
-// CartItem - one singular entry
 /* In the future, if we want to add CartItem variants (e.g. color of shirt, flavor of soda, etc), we
  * can add it as another attribute.
  *
@@ -56,7 +55,7 @@ export const ITEMS_MAP = returnAllItems();
  * Note: we don't have a user table or authentication for the prototype, so the cart is stored on the
   pseudouser's local machine using idb-keyval
 */
-export type CartItem = [string, number]; // string - id, number - count (number of items purchasing)
+export type CartItems = Record<string, { count: number }>;
 export function useCart() {
   async function getCart() {
     return await get("cart");

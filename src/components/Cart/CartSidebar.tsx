@@ -15,7 +15,7 @@ import {
   ModalFooter,
   Image,
 } from "@chakra-ui/react";
-import { ITEMS_MAP } from "../../database/index";
+import { CartItems, ITEMS_MAP } from "../../database/index";
 import React from "react";
 import RoutineEssentialsList from "./RoutineEssentialsList";
 
@@ -23,7 +23,7 @@ export default function CartSidebar({
   cart,
   routineEssentials,
 }: {
-  cart: Record<string, { count: number }>;
+  cart: CartItems;
   routineEssentials: [string, {}][];
 }): React.ReactElement {
   const [subtotal, setSubtotal] = React.useState(0);

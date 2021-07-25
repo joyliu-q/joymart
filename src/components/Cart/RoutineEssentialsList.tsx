@@ -1,5 +1,10 @@
 import { Text, Heading, Button, Box, Flex, Checkbox } from "@chakra-ui/react";
-import { ITEMS_MAP, RoutineEssentialItem, useCart } from "../../database/index";
+import {
+  CartItems,
+  ITEMS_MAP,
+  RoutineEssentialItem,
+  useCart,
+} from "../../database/index";
 import React from "react";
 import {
   AddIcon,
@@ -7,13 +12,12 @@ import {
   ChevronUpIcon,
   QuestionIcon,
 } from "@chakra-ui/icons";
-import { clear } from "idb-keyval";
 
 export default function RoutineEssentialsList({
   cart,
   routineEssentials,
 }: {
-  cart: Record<string, { count: number }>;
+  cart: CartItems;
   routineEssentials: RoutineEssentialItem[];
 }): React.ReactElement {
   const [routineIsCollapsed, setRoutineIsCollapsed] = React.useState(true);

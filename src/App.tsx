@@ -7,10 +7,15 @@ import Category from "./pages/Category";
 import Welcome from "./pages/Welcome";
 
 import React from "react";
-import { RoutineEssentialItem, useCart, useRoutineEssentals } from "./database";
+import {
+  CartItems,
+  RoutineEssentialItem,
+  useCart,
+  useRoutineEssentals,
+} from "./database";
 
 function App() {
-  const [cart, setCart] = React.useState<Record<string, { count: number }>>({});
+  const [cart, setCart] = React.useState<CartItems>({});
   const [routineEssentials, setRoutineEssentials] = React.useState<
     RoutineEssentialItem[]
   >([]);
@@ -21,7 +26,7 @@ function App() {
   React.useEffect(() => {
     async function refreshData() {
       const cartData = (await getCart()) ?? {};
-      const cartArray: Record<string, { count: number }> = cartData;
+      const cartArray: CartItems = cartData;
       setCart(cartArray);
 
       const routineData = (await getRoutineEssentals()) ?? {};
