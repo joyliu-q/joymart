@@ -15,7 +15,7 @@ const ITEMS = [
     },
     inventory: 20,
     category: "clothes",
-    image: "/graphics/backpack.svg",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
   },
   {
     id: 1,
@@ -31,7 +31,8 @@ const ITEMS = [
     },
     inventory: 20,
     category: "clothes",
-    image: "/graphics/bell-bottoms-jeans.svg",
+    image:
+      "https://i5.walmartimages.com/asr/c8c76fc3-c0b9-4e26-b146-40b3ca6fc0ad.7baf63a11f55bb9f5d5a720af66aab49.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
   },
   {
     id: 2,
@@ -330,26 +331,30 @@ const ITEMS = [
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description:
+        "Apples, Fuji 48 oz (3 lbs) 1.36 kg Meets or exceeds US extra fancy. USDA organic. Certified organic by: Washington State Dept. of Agriculture. Fruits & Veggies: More matters. www.rainierfruit.com. Produce of USA. 48 oz (3 lbs) 1.36 kg Selah, WA 98942",
     },
     inventory: 20,
     category: "fruits",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/c71e3862-afe6-4b88-93d2-9a1cec05f1a4_2.7e3a47bf7fe6e39a01d45c7cf792b632.jpeg?odnHeight=200&odnWidth=200&odnBg=ffffff",
   },
   {
     id: 21,
     rating: 4,
-    name: "Grapes",
+    name: "Fresh Black Seedless Grapes, bag",
     price: {
-      default: 12.99,
+      default: 5.85,
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description:
+        "Treat yourself to the delicious, juicy flavor of Fresh Black Seedless Grapes. These grapes are bursting with flavor and are completely seedless, so you can easily enjoy a handful as a fresh snack any time of day. Prized for their lush, juicy pulp, very sweet flavors, and highly aromatic skins that offer a pleasant chewiness, they are also perfect for creating stunning cheese boards and charcuterie plates by pairing them with fresh cheese, crackers, or delectable meats like prosciutto. If you want to be really creative, you can freeze them and use them and ice cubes that won't melt and release water into your favorite drinks. Treat yourself to the fresh taste of Fresh Black Seedless Grapes.",
     },
     inventory: 20,
     category: "fruits",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/6e28c86b-522b-4c2f-9216-c90ff60ba741_2.1067c57d4630bbc11557ab28a24f02cd.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
   },
   {
     id: 22,
@@ -360,26 +365,29 @@ const ITEMS = [
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description: "One pineapple :D",
     },
     inventory: 20,
     category: "fruits",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/dd2a5d3c-d358-4579-8ece-59ce1804ab5b_9.0b874251fccc645fd98ac76e797c2d2a.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
   },
   {
     id: 23,
     rating: 4,
-    name: "Oranges",
+    name: "Clementines, 3lb bag",
     price: {
       default: 12.99,
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description: `Mandarins: Sweet, seedless and easy to peel. Mandarins are the coveted leader of the citrus category—high in Vitamin C, and an immunity boosting superfood.
+      Clementines, 3 lb`,
     },
     inventory: 20,
     category: "fruits",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/33ea1138-975e-47a4-81ff-62d88546df67.419bf6bc44206b42dccd3becbd04f4a4.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
   },
   {
     id: 24,
@@ -390,11 +398,13 @@ const ITEMS = [
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description:
+        "Whole milk is more delicious. There. We?re going to say it. It?s pretty simple. Who?s going to argue with that? Nobody. It?s true! Think about it. Nobody?s going to laugh at you if you said, ?Hey everyone! Whole milk is more delicious!? Nope. They may look at you a little weird, and that?s because you just shouted a random statement about milk in a crowded area. But not because it?s not true. Because it is true! We?re just being honest with you.We could try to write some clever things about whole milk to get you to buy it. Except you just did. Anyway, this is real talk. Because this is real milk. And it is just more delicious",
     },
     inventory: 20,
     category: "frozen-food",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/5f2e0032-b30c-4e46-b7ab-9a196b1075d2.13b5611af2c39b7e0b464ae8110d5db9.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
   },
   {
     id: 25,
@@ -405,11 +415,13 @@ const ITEMS = [
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description:
+        "Yogurt, Greek, Traditional Style, Honey 6 oz (170 g) Epic taste - fit for the gods. Probiotic cultures. Gluten-free. Zoi - it's Greek for life! Indulge your taste buds with Zoi's rich flavor, revel in its luxuriously smooth texture, and tap into the nutritious bonuses of calcium, probiotics and live cultures. Now, raise your spoons to life. Zoi! Made with fresh grade A milk that contains no antibiotics or synthetic growth hormones. The FDA states that no difference has been shown between milk from rBGH-treated cows and untreated cows. Keep refrigerated. 6 oz (170 g) Auburn, WA 98001 800-950-9264",
     },
     inventory: 20,
     category: "frozen-food",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/874cb835-c1a9-4f7d-8630-bc4831b392db.8f61ddf3d398ebd1974f0c03dd67bf70.jpeg?odnWidth=612&odnHeight=612&odnBg=ffffff",
   },
   {
     id: 26,
@@ -420,11 +432,13 @@ const ITEMS = [
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description:
+        "Sun-ripened California strawberries so good! AND swirled around delicious Breyers ice cream? What could be a better dessert? Our Breyers Natural Strawberry ice cream is packed with strawberries picked at the peak of happiness! Did we mention that our strawberries are also 100% sustainably sourced? In fact, our Natural Strawberry is delicious all around. We start with ingredients like milk, fresh cream, sugar and strawberries to give you a delicious ice cream. Our strawberries are pretty great, but that milk and cream is special too! We only use 100% Grade A milk and cream from American cows not treated with artificial growth hormones*. And to boot we use colors and flavors from natural sources and sustainable vanilla from Madagascar. Breyers Strawberry is also made with Non-GMO sourced ingredients! Back in 1866 when William Breyer started his small ice cream operation in Philly, he also valued the quality of his ingredients. So much so, that he created a Pledge of Purity to stand behind the quality of his ice cream. More than 150 years later we still follow his same principles with our own Pledge to use only high quality ingredients in our desserts. We hope you agree thats what makes our Breyers Natural Strawberry so good! Give it a try and leave us a review at www.breyers.com or follow us @Breyers on Instagram! * The FDA states that no significant difference has been shown between dairy derived from rBST-treated and non-rBST-treated cows.",
     },
     inventory: 20,
     category: "frozen-food",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/23ee409b-054a-47c8-add7-35f4dcb7f57f_1.78ea83e76694f0f7aab8f14a521d6da6.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
   },
   {
     id: 27,
@@ -435,11 +449,13 @@ const ITEMS = [
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description:
+        "2% is what happens when a delicious whole milk meets a delicious nonfat milk, and they decide to make the most perfect milk known to man, woman and child. It is the ideal to which all other milks aspire to?somehow impossibly creamy and smooth while remaining light,refreshing, and low fat. It?s almost unfair, how great 2% really is. But before you become jealous of a carton of milk, which would be somewhat ridiculous, have a nice tall glass of it instead and enjoy the sweet taste of perfection.",
     },
     inventory: 20,
     category: "frozen-food",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/2f6f03d8-6d3b-42a3-b697-e071985ee4b1.68514e0d97d48ad4a39838df3b4b8a8a.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
   },
   {
     id: 28,
@@ -450,11 +466,13 @@ const ITEMS = [
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description:
+        "Romaine Hearts, Organic, Bag 12 OZ Just the sweet crunchy inner hearts of romaine. Good fresh greens. Look at these beautiful hearts. USDA organic.Certified organic by Quality Assurance International. Please wash before serving. Perishable, keep refrigerated. 12 oz (340 g) Salinas, CA 93901 2014Organic Romaine Hearts, 3 Pack",
     },
     inventory: 20,
     category: "vegetables",
-    image: "TEMP",
+    image:
+      "https://i5.walmartimages.com/asr/6f9439a4-8daa-4f93-af5f-5cd4f1fc9099_1.a2e6a2cff8f2b9e05b645ebeed226ebe.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
   },
   {
     id: 29,
@@ -482,7 +500,8 @@ const ITEMS = [
       unit: null,
     },
     details: {
-      description: "TEMP",
+      description:
+        "Potatoes, Idaho, Bag 5 LB Fresh ideas from the valley. Grown in Idaho. US No. 1. Russet Burbank. Great for baking! Great for baking, frying, mashing, and wedges. Visit www.idahopotato.com for recipe ideas! Quality Pledge: Green Giant Fresh potatoes are selected by our growers to ensure consistent quality and freshness. If you have any questions or comments about our products call 1-800-998-9996 weekdays 7:30 AM-5:30 PM CT. Packed in Idaho. Produce of USA. Microwave: (For the perfect fluffy baked potato). Scrub potato well under cold running water. Pierce with fork in several places. Place on paper towel. Microwave one medium potato on high 2-1/2 to 5 minutes. (For each additional potato, add 3 minutes cook time. Arrange potatoes at least 1 inch apart.) Turn once halfway through cooking. Cook until potato just begins to feel soft when pressed. Remove from microwave. Wrap in foil. Let stand 5 minutes. Note: Oven temperatures may vary, cooking times are approximate. Conventional Oven: Scrub potato well under cold running water. Pierce with fork in several places. Place potato directly on oven rack. Bake at 425 degrees F for 50 to 60 minutes. Potato is done when fork easily pierces it. Potatoes store best in a dark, dry, and well ventilated area. Optimum temperature: 40 degrees - 50 degrees F. 5 lb (2.26 kg) Idaho Falls, ID 83402 800-998-9996 General Mills 2009Idaho Potatoes, 5 lbs",
     },
     inventory: 20,
     category: "vegetables",
