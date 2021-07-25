@@ -13,6 +13,7 @@ import {
   useCart,
   useRoutineEssentals,
 } from "./database";
+import Credits from "./pages/Credits";
 
 function App() {
   const [cart, setCart] = React.useState<CartItems>({});
@@ -114,6 +115,9 @@ function App() {
             </Route>
             <Route path="/explore">
               <Welcome />
+            </Route>
+            <Route path="/credits">
+              <Credits />
             </Route>
             <Route path="/">
               <Home />
