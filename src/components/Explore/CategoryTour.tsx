@@ -4,8 +4,6 @@ import {
   Button,
   IconButton,
   Flex,
-  UnorderedList,
-  ListItem,
   Image,
   Heading,
   Stack,
@@ -269,7 +267,7 @@ export default function CategoryTour({ category }: { category: string }) {
           onRequestClose={() => setIsTourOpen(false)}
           getCurrentStep={async (current) => {
             if (current === steps.length - 1) {
-              //await set("category-tour", true);
+              await set("category-tour", true);
             }
           }}
         />

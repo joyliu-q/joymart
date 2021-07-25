@@ -14,6 +14,7 @@ import {
   ModalHeader,
   ModalFooter,
   Image,
+  Link,
 } from "@chakra-ui/react";
 import {
   CartItems,
@@ -127,16 +128,28 @@ export default function CartSidebar({
               <ListItem>The Joy of discovery</ListItem>
             </UnorderedList> */}
               <Text>
-                You can learn more about Joymart and my development process
-                here.
+                You can learn more about Joymart and my development process{" "}
+                <Link
+                  href="https://github.com/joyliu-q/joymart"
+                  textDecor="underline"
+                >
+                  here
+                </Link>
+                .
               </Text>
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onClose}>
+            <Button
+              as="a"
+              href="https://github.com/joyliu-q/joymart"
+              variant="ghost"
+            >
+              See Github
+            </Button>
+            <Button colorScheme="pink" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button colorScheme="pink">Learn More</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -12,12 +12,7 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import {
-  CartItems,
-  ITEMS_MAP,
-  RoutineEssentialItem,
-  RoutineEssentialItems,
-} from "../database";
+import { CartItems, ITEMS_MAP, RoutineEssentialItems } from "../database";
 import React from "react";
 import ItemRow from "../components/Item/ItemRow";
 import ExploreSidebar from "../components/Explore/ExploreSidebar";
@@ -56,7 +51,7 @@ export default function Category({
   routineEssentials,
   setCart,
 }: {
-  category: string;
+  category: Categories;
   cart: CartItems;
   routineEssentials: RoutineEssentialItems;
   setCart: React.Dispatch<React.SetStateAction<CartItems>>;
@@ -70,7 +65,7 @@ export default function Category({
     let newItems = items;
     ITEMS_MAP.forEach((value, key: string) => {
       const item = ITEMS_MAP.get(key) as ItemDetails;
-      if (category === "all" ? true : item.category === category) {
+      if (category === Categories.All ? true : item.category === category) {
         newItems.push(key);
       }
     });
@@ -86,7 +81,7 @@ export default function Category({
       }}
       bgColor="orange.100"
     >
-      {category === "all" ? null : (
+      {category === Categories.All ? null : (
         <Box position="fixed" height="100%" top="80px" left={4} zIndex={5}>
           <Flex position="sticky" top="80px" zIndex={5} alignItems="center">
             <Tooltip
@@ -130,7 +125,8 @@ export default function Category({
             >
               <Heading as="h5" size="xl" fontWeight={500}>
                 Currently, we have no new{" "}
-                <b>{category === "all" ? "" : category}</b> items in stock.
+                <b>{category === Categories.All ? "" : category}</b> items in
+                stock.
               </Heading>
               <Text>
                 Feel free to walk around in other sections for potential
@@ -183,8 +179,28 @@ export default function Category({
         top="60px"
       >
         <ExploreSidebar itemSelected={itemSelected} />
+        {category === Categories.Clothes ? (
+          <Tooltip
+            hasArrow
+            label="Virtual Try-ons Coming Soon!"
+            aria-label="Virtual Try-ons Coming Soon!"
+          >
+            <Image
+              boxSize="250px"
+              transition={"all 0.5s ease"}
+              _hover={{
+                transform: "scale(1.15)",
+                transition: "all 1.2s ease",
+              }}
+              src="/layout/clothes.svg"
+              position="absolute"
+              bottom={-2}
+              left={8}
+            />
+          </Tooltip>
+        ) : null}
         <ShowCartButton />
-        {category === "all" || items.length === 0 ? null : (
+        {category === Categories.All || items.length === 0 ? null : (
           <CategoryTour category={category} />
         )}
       </GridItem>

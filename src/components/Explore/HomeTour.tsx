@@ -33,7 +33,7 @@ export default function HomeTour() {
         onRequestClose={() => setIsTourOpen(false)}
         getCurrentStep={async (current) => {
           if (current === steps.length - 1) {
-            //await set("home-tour", true);
+            await set("home-tour", true);
           }
         }}
       />

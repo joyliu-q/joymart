@@ -3,7 +3,7 @@ import "./App.css";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
-import Category from "./pages/Category";
+import Category, { Categories } from "./pages/Category";
 import Welcome from "./pages/Welcome";
 
 import React from "react";
@@ -38,7 +38,6 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-
       <BrowserRouter>
         <div>
           <Switch>
@@ -49,10 +48,9 @@ function App() {
                 setCart={setCart}
               />
             </Route>
-
             <Route path="/explore/frozen-food">
               <Category
-                category="frozen-food"
+                category={Categories.FrozenFood}
                 cart={cart}
                 routineEssentials={routineEssentials}
                 setCart={setCart}
@@ -60,7 +58,7 @@ function App() {
             </Route>
             <Route path="/explore/fruits">
               <Category
-                category="fruits"
+                category={Categories.Fruits}
                 cart={cart}
                 routineEssentials={routineEssentials}
                 setCart={setCart}
@@ -68,7 +66,7 @@ function App() {
             </Route>
             <Route path="/explore/vegetables">
               <Category
-                category="vegetables"
+                category={Categories.Vegetables}
                 cart={cart}
                 routineEssentials={routineEssentials}
                 setCart={setCart}
@@ -76,7 +74,7 @@ function App() {
             </Route>
             <Route path="/explore/general">
               <Category
-                category="general"
+                category={Categories.General}
                 cart={cart}
                 routineEssentials={routineEssentials}
                 setCart={setCart}
@@ -84,7 +82,7 @@ function App() {
             </Route>
             <Route path="/explore/furniture">
               <Category
-                category="furniture"
+                category={Categories.Furniture}
                 cart={cart}
                 routineEssentials={routineEssentials}
                 setCart={setCart}
@@ -92,16 +90,15 @@ function App() {
             </Route>
             <Route path="/explore/electronics">
               <Category
-                category="electronics"
+                category={Categories.Electronics}
                 cart={cart}
                 routineEssentials={routineEssentials}
                 setCart={setCart}
               />
             </Route>
-
             <Route path="/explore/clothes">
               <Category
-                category="clothes"
+                category={Categories.Clothes}
                 cart={cart}
                 routineEssentials={routineEssentials}
                 setCart={setCart}
@@ -109,7 +106,7 @@ function App() {
             </Route>
             <Route path="/explore/all">
               <Category
-                category="all"
+                category={Categories.All}
                 cart={cart}
                 routineEssentials={routineEssentials}
                 setCart={setCart}

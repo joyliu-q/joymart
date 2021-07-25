@@ -4,7 +4,6 @@ import React from "react";
 import Rating from "react-rating";
 import { ItemDetails } from "../../constants/item";
 
-//TODO this bronken
 export default function ExploreSidebar({
   itemSelected = null,
 }: {
