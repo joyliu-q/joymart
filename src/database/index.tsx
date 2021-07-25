@@ -14,7 +14,6 @@ import { ItemDetails } from "../constants/item";
 
 export async function tourIsShown({ tourName }: { tourName: string }) {
   const value = await get(tourName);
-  console.log(value);
   if (value === true) {
     return true;
   }
@@ -113,6 +112,7 @@ export function useCart() {
   pseudouser's local machine using idb-keyval
 */
 export type RoutineEssentialItem = [string, {}]; // string - id, {} - empty array, if we want to add more attributes in the future, they go here
+export type RoutineEssentialItems = Record<string, {}>;
 
 export function useRoutineEssentals() {
   async function getRoutineEssentals() {

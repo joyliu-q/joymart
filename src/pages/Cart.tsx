@@ -1,5 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import { CartItems, RoutineEssentialItem } from "../database/index";
+import { CartItems, RoutineEssentialItems } from "../database/index";
 import React from "react";
 import CartResult from "../components/Cart/CartResult";
 import CartSidebar from "../components/Cart/CartSidebar";
@@ -12,7 +12,7 @@ export default function Cart({
 }: {
   isModal?: boolean;
   cart: CartItems;
-  routineEssentials: RoutineEssentialItem[];
+  routineEssentials: RoutineEssentialItems;
   setCart: React.Dispatch<React.SetStateAction<CartItems>>;
 }): React.ReactElement {
   return (

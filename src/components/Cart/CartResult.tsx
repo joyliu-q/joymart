@@ -2,8 +2,8 @@ import { Text, Flex, Heading, Stack, Image, Button } from "@chakra-ui/react";
 import ItemRow from "../Item/ItemRow";
 import {
   ITEMS_MAP,
-  RoutineEssentialItem,
   CartItems,
+  RoutineEssentialItems,
 } from "../../database/index";
 import React from "react";
 
@@ -13,7 +13,7 @@ export default function CartResult({
   setCart,
 }: {
   cart: CartItems;
-  routineEssentials: RoutineEssentialItem[];
+  routineEssentials: RoutineEssentialItems;
   setCart: React.Dispatch<React.SetStateAction<CartItems>>;
 }): React.ReactElement {
   return (

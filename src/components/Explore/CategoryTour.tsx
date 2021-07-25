@@ -21,7 +21,6 @@ export default function CategoryTour({ category }: { category: string }) {
   React.useEffect(() => {
     async function checkIsShown() {
       const isShown = await tourIsShown({ tourName: "category-tour" });
-      console.log(`isShown: ${isShown}`);
       setIsTourOpen(!isShown);
     }
     checkIsShown();

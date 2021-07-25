@@ -11,7 +11,7 @@ import {
 import React from "react";
 import {
   CartItems,
-  RoutineEssentialItem,
+  RoutineEssentialItems,
   useCart,
   useRoutineEssentals,
 } from "../../database";
@@ -21,9 +21,8 @@ export default function ShowCartButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [cart, setCart] = React.useState<CartItems>({});
-  const [routineEssentials, setRoutineEssentials] = React.useState<
-    RoutineEssentialItem[]
-  >([]);
+  const [routineEssentials, setRoutineEssentials] =
+    React.useState<RoutineEssentialItems>({});
 
   const { get: getCart } = useCart();
   const { get: getRoutineEssentals } = useRoutineEssentals();
@@ -35,7 +34,7 @@ export default function ShowCartButton() {
       setCart(cartArray);
 
       const routineData = (await getRoutineEssentals()) ?? {};
-      const routineArray: RoutineEssentialItem[] = Object.entries(routineData);
+      const routineArray: RoutineEssentialItems = routineData;
       setRoutineEssentials(routineArray);
     }
     refreshData();

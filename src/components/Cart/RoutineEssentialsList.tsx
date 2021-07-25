@@ -2,7 +2,7 @@ import { Text, Heading, Button, Box, Flex, Checkbox } from "@chakra-ui/react";
 import {
   CartItems,
   ITEMS_MAP,
-  RoutineEssentialItem,
+  RoutineEssentialItems,
   useCart,
 } from "../../database/index";
 import React from "react";
@@ -12,19 +12,30 @@ import {
   ChevronUpIcon,
   QuestionIcon,
 } from "@chakra-ui/icons";
+import { clear } from "idb-keyval";
 
 export default function RoutineEssentialsList({
   cart,
   routineEssentials,
 }: {
   cart: CartItems;
-  routineEssentials: RoutineEssentialItem[];
+  routineEssentials: RoutineEssentialItems;
 }): React.ReactElement {
   const [routineIsCollapsed, setRoutineIsCollapsed] = React.useState(true);
-  const [checkedItems, setCheckedItems] = React.useState(
-    new Array(routineEssentials.length).fill(false)
-  );
 
+  const checked: Record<string, boolean> = {};
+
+  const [checkedItems, setCheckedItems] = React.useState(checked);
+
+  React.useEffect(() => {
+    const checked: Record<string, boolean> = {};
+    Object.entries(cart).forEach((entry) => {
+      const [id] = entry;
+      checked[id] = true;
+    });
+
+    setCheckedItems(checked);
+  }, [cart]);
   const { add: addToCart } = useCart();
 
   const addItemToCart = (id: string) => {
@@ -36,12 +47,12 @@ export default function RoutineEssentialsList({
       numOfCheckedItems() === 0 ||
       numOfCheckedItems() === routineEssentials.length
     ) {
-      routineEssentials.forEach((entry) => {
+      Object.entries(routineEssentials).forEach((entry) => {
         const [id] = entry;
         addItemToCart(id);
       });
     } else {
-      routineEssentials.forEach((entry, index) => {
+      Object.entries(routineEssentials).forEach((entry, index) => {
         const [id] = entry;
         if (checkedItems[index] === true) {
           addItemToCart(id);
@@ -53,25 +64,15 @@ export default function RoutineEssentialsList({
 
   const numOfCheckedItems = () => {
     let count = 0;
-    checkedItems.forEach((value) => {
-      if (value === true) {
+    Object.entries(checkedItems).forEach((entry) => {
+      const [_id, checked] = entry;
+      if (checked) {
         count += 1;
       }
     });
     return count;
   };
 
-  React.useEffect(() => {
-    const newCheckedItems = checkedItems;
-
-    Object.entries(routineEssentials).map((entry, index) => {
-      const [id] = entry;
-      if (cart[id] !== null && cart[id] !== undefined) {
-        newCheckedItems[index] = true;
-      }
-    });
-    setCheckedItems(newCheckedItems);
-  }, []);
   return (
     <>
       <Flex
@@ -170,18 +171,22 @@ export default function RoutineEssentialsList({
         ) : (
           <>
             {Object.entries(routineEssentials)
-              .slice(0, routineIsCollapsed ? 3 : routineEssentials.length)
+              .slice(
+                0,
+                routineIsCollapsed
+                  ? Math.min(3, Object.keys(routineEssentials).length)
+                  : Object.keys(routineEssentials).length
+              )
               .map((entry, index) => {
-                const id = entry[1][0];
+                const [id] = entry;
                 const item = ITEMS_MAP.get(id);
                 if (item == null) {
                   return null;
                 }
-                console.log(entry);
                 return (
                   <Checkbox
                     key={id}
-                    isChecked={checkedItems[index]}
+                    isChecked={checkedItems[`${id}`]}
                     onChange={(e) => {
                       e.stopPropagation();
                       let checkedItemsCopy = checkedItems;

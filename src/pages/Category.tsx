@@ -12,7 +12,12 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import { CartItems, ITEMS_MAP, RoutineEssentialItem } from "../database";
+import {
+  CartItems,
+  ITEMS_MAP,
+  RoutineEssentialItem,
+  RoutineEssentialItems,
+} from "../database";
 import React from "react";
 import ItemRow from "../components/Item/ItemRow";
 import ExploreSidebar from "../components/Explore/ExploreSidebar";
@@ -53,10 +58,10 @@ export default function Category({
 }: {
   category: string;
   cart: CartItems;
-  routineEssentials: RoutineEssentialItem[];
+  routineEssentials: RoutineEssentialItems;
   setCart: React.Dispatch<React.SetStateAction<CartItems>>;
 }): React.ReactElement {
-  const [items, setItems] = React.useState<React.ReactElement[]>([]);
+  const [items, setItems] = React.useState<string[]>([]);
   const [itemSelected, setItemSelected] =
     React.useState<ItemDetails | null>(null);
 
@@ -66,21 +71,11 @@ export default function Category({
     ITEMS_MAP.forEach((value, key: string) => {
       const item = ITEMS_MAP.get(key) as ItemDetails;
       if (category === "all" ? true : item.category === category) {
-        console.log(item);
-
-        newItems.push(
-          <ItemRow
-            item={value}
-            key={key}
-            onClick={() => setItemSelected(item)}
-            cart={cart}
-            routineEssentials={routineEssentials}
-          />
-        );
+        newItems.push(key);
       }
     });
     setItems(newItems);
-  }, []);
+  }, [cart, routineEssentials, category]);
 
   return (
     <Grid
@@ -157,7 +152,23 @@ export default function Category({
             </Stack>
           </Center>
         ) : (
-          <Box>{items}</Box>
+          <Box>
+            {items.map((id) => {
+              const item = ITEMS_MAP.get(id);
+              if (item === undefined || item == null) {
+                return null;
+              }
+              return (
+                <ItemRow
+                  item={item}
+                  key={id}
+                  onClick={() => setItemSelected(item)}
+                  cart={cart}
+                  routineEssentials={routineEssentials}
+                />
+              );
+            })}
+          </Box>
         )}
       </GridItem>
       <GridItem

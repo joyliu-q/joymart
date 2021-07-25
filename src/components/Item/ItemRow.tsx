@@ -26,6 +26,7 @@ import React from "react";
 import {
   CartItems,
   RoutineEssentialItem,
+  RoutineEssentialItems,
   useCart,
   useRoutineEssentals,
 } from "../../database/";
@@ -43,7 +44,7 @@ export default function ItemRow({
   count?: number;
   onClick?: () => void;
   cart: CartItems;
-  routineEssentials: RoutineEssentialItem[];
+  routineEssentials: RoutineEssentialItems;
   hideOnDelete?: boolean;
 }) {
   const { get: getCart, add: addToCart, remove: removeFromCart } = useCart();
@@ -60,7 +61,10 @@ export default function ItemRow({
   const [inCart, setInCart] = React.useState(
     cart[`${item.id}`] !== null && cart[`${item.id}`] !== undefined
   );
-  const [inRoutineEssentials, setInRoutineEssentials] = React.useState(false);
+  const [inRoutineEssentials, setInRoutineEssentials] = React.useState(
+    routineEssentials[`${item.id}`] !== null &&
+      routineEssentials[`${item.id}`] !== undefined
+  );
 
   const toggleItemInCart = () => {
     if (inCart) {
@@ -105,24 +109,19 @@ export default function ItemRow({
   // Make cart & routineEssential data up to date
   React.useEffect(() => {
     setInCart(cart[`${item.id}`] !== null && cart[`${item.id}`] !== undefined);
+    setInRoutineEssentials(
+      routineEssentials[`${item.id}`] !== null &&
+        routineEssentials[`${item.id}`] !== undefined
+    );
 
+    console.log(item.id);
+
+    console.log(routineEssentials);
     if (inCart) {
       const { count } = cart[`${item.id}`];
       setItemCount(count);
     }
-
-    setInRoutineEssentials(
-      routineEssentials[item.id] !== null &&
-        routineEssentials[item.id] !== undefined
-    );
-    Object.entries(routineEssentials).forEach((entry, index) => {
-      const [id] = entry;
-      console.log(cart[id]);
-      if (cart[id] !== null && cart[id] !== undefined && id === `${item.id}`) {
-        setInRoutineEssentials(true);
-      }
-    });
-  }, [cart]);
+  }, [cart, routineEssentials]);
 
   // Make cart & routineEssential data up to date
   React.useEffect(() => {

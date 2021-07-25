@@ -15,7 +15,11 @@ import {
   ModalFooter,
   Image,
 } from "@chakra-ui/react";
-import { CartItems, ITEMS_MAP } from "../../database/index";
+import {
+  CartItems,
+  ITEMS_MAP,
+  RoutineEssentialItems,
+} from "../../database/index";
 import React from "react";
 import RoutineEssentialsList from "./RoutineEssentialsList";
 
@@ -24,7 +28,7 @@ export default function CartSidebar({
   routineEssentials,
 }: {
   cart: CartItems;
-  routineEssentials: [string, {}][];
+  routineEssentials: RoutineEssentialItems;
 }): React.ReactElement {
   const [subtotal, setSubtotal] = React.useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
