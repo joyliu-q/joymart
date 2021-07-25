@@ -156,7 +156,7 @@ export default function ItemRow({
         </Center>
       ) : null}
       {hideOnDelete && showDeletedBanner ? null : (
-        <Center py={12}>
+        <Center py={12} className="itemRow">
           <Stack
             direction="row"
             spacing={12}
@@ -203,6 +203,7 @@ export default function ItemRow({
                 width={282}
                 objectFit={"cover"}
                 src={item.image}
+                fallbackSrc={"https://via.placeholder.com/250"}
               />
             </Box>
             <Stack textAlign="left" width="100%">
@@ -272,7 +273,7 @@ export default function ItemRow({
                 fontSize={"sm"}
                 textTransform={"uppercase"}
               >
-                Brand
+                {item.category}
               </Text>
               <Heading fontSize={"2xl"} fontWeight={500}>
                 {item.name}
@@ -310,6 +311,7 @@ export default function ItemRow({
                 </Stack>
                 <Flex>
                   <Button
+                    className="routineEssentials"
                     mr={1}
                     onClick={toggleItemInRoutineEssentials}
                     variant={inRoutineEssentials ? "ghost" : "solid"}

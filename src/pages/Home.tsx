@@ -7,9 +7,39 @@ import {
   Button,
   IconButton,
   Flex,
+  Tooltip,
 } from "@chakra-ui/react";
+import React from "react";
+import Typed from "typed.js";
 
 export default function Home() {
+  const el = React.useRef(null as any);
+  // Create reference to store the Typed instance itself
+  const typed = React.useRef(null as any);
+
+  React.useEffect(() => {
+    const options = {
+      strings: [
+        "Welcome to <b style='color: #ED8936'>Joymart</b>",
+        "Bienvenido a <b style='color: #ED8936'>Joymart</b>",
+        "欢迎来到<b style='color: #ED8936'>Joymart</b>",
+        "Bienvenue chez <b style='color: #ED8936'>Joymart</b>",
+      ],
+      typeSpeed: 50,
+      backSpeed: 50,
+      loop: true,
+    };
+
+    // elRef refers to the <span> rendered below
+    typed.current = new Typed(el.current as string | Element, options);
+
+    return () => {
+      // Make sure to destroy Typed instance during cleanup
+      // to prevent memory leaks
+      typed.current.destroy();
+    };
+  }, []);
+
   return (
     <Container
       maxW={"8xl"}
@@ -32,16 +62,16 @@ export default function Home() {
         }}
       >
         <Heading
-          as="h1"
+          as="span"
           fontWeight={600}
           fontSize={{ base: "4xl", sm: "5xl", md: "7xl" }}
-          lineHeight={"110%"}
           textShadow="-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white"
         >
-          Welcome to{" "}
-          <Text as={"span"} color={"orange.400"}>
-            Joymart
-          </Text>
+          <div className="wrap">
+            <div className="type-wrap">
+              <span style={{ whiteSpace: "pre" }} ref={el} />
+            </div>
+          </div>
         </Heading>
         <Text
           fontSize={{ base: "md", sm: "xl", md: "2xl" }}
@@ -65,20 +95,29 @@ export default function Home() {
           px={6}
           colorScheme={"orange"}
           bg={"orange.400"}
-          _hover={{ bg: "orange.500" }}
+          _hover={{
+            bg: "orange.500",
+            transform: "scale(1.05)",
+            transition: "all 0.8s ease",
+          }}
           as="a"
-          href="/welcome"
+          href="/explore"
           size="lg"
         >
           Start Shopping
         </Button>
-        <IconButton
-          aria-label="question-icon"
-          icon={<QuestionIcon />}
-          rounded={"full"}
-          px={6}
-          size="lg"
-        />
+        <Tooltip
+          label={`Welcome! Click on the "Start Shopping" button to start!`}
+          aria-label={`Welcome! Click on the "Start Shopping" button to start!`}
+        >
+          <IconButton
+            aria-label="question-icon"
+            icon={<QuestionIcon />}
+            rounded={"full"}
+            px={6}
+            size="lg"
+          />
+        </Tooltip>
       </Stack>
     </Container>
   );

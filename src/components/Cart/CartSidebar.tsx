@@ -1,4 +1,20 @@
-import { Text, Flex, Heading, Stack, Button, Box } from "@chakra-ui/react";
+import {
+  Text,
+  Flex,
+  Heading,
+  Stack,
+  Button,
+  Box,
+  Modal,
+  useDisclosure,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+  Image,
+} from "@chakra-ui/react";
 import { ITEMS_MAP } from "../../database/index";
 import React from "react";
 import RoutineEssentialsList from "./RoutineEssentialsList";
@@ -11,6 +27,7 @@ export default function CartSidebar({
   routineEssentials: [string, {}][];
 }): React.ReactElement {
   const [subtotal, setSubtotal] = React.useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Calculate subtotal based on cart
   React.useEffect(() => {
@@ -47,23 +64,78 @@ export default function CartSidebar({
           <Text>Est. total</Text>
           <Text>${subtotal}</Text>
         </Flex>
-        <Button
-          size="lg"
-          bg="#FD9500"
-          color="orange.800"
-          minHeight={16}
-          fontSize={24}
-          _hover={{
-            bg: "#FFBF2F",
-          }}
-        >
-          Continue to check out
-        </Button>
+        <Flex alignItems="center" onClick={onOpen} role="group">
+          <Image
+            boxSize="100px"
+            src="/graphics/paper-plane.svg"
+            mr="20px"
+            _groupHover={{
+              transform: "scale(1.1)",
+              transition: "all 0.8s ease",
+            }}
+          />
+          <Button
+            size="lg"
+            bg="#71AFC4"
+            color="white"
+            minHeight={16}
+            width="100%"
+            fontSize={24}
+            _hover={{
+              bg: "#78EAC4",
+            }}
+          >
+            Continue to check out
+          </Button>
+        </Flex>
       </Stack>
       <RoutineEssentialsList
         routineEssentials={routineEssentials}
         cart={cart}
       />
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent position="fixed" top="calc(50% - 300px)" p={4}>
+          <ModalHeader>
+            <Heading>Thank you for playing Joymart's demo!</Heading>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Stack>
+              <Text>
+                Joymart is an imaginary online shopping platform where I
+                explored bringing the personal touch of in-person shopping into
+                the virtual experience, including <b>exploration</b> and{" "}
+                <b>interaction</b>.
+              </Text>
+              {/* <Text>This includes:</Text>
+            <UnorderedList>
+              <ListItem>
+                Personal interactions with individuals in the shop
+              </ListItem>
+              <ListItem>
+                The exploration aspect (a physical "space" that you can traverse
+                and find items)
+              </ListItem>
+              <ListItem>
+                Being able to quickly see at what's in your cart while shopping
+              </ListItem>
+              <ListItem>The Joy of discovery</ListItem>
+            </UnorderedList> */}
+              <Text>
+                You can learn more about Joymart and my development process
+                here.
+              </Text>
+            </Stack>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button colorScheme="pink">Learn More</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

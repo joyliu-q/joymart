@@ -26,7 +26,7 @@ export default function Navbar(): React.ReactElement {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box position="sticky" top={0} zIndex={2}>
+    <Box position="sticky" top={0} zIndex={10}>
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
@@ -271,11 +271,14 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Explore",
-    href: "/explore",
     children: [
       {
-        label: "Explore All Items",
+        label: "Layout Map",
         href: "/explore",
+      },
+      {
+        label: "Explore All Items",
+        href: "/explore/all",
       },
       {
         label: "View My Routine Essentials",

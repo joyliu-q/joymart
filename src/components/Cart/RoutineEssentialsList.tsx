@@ -7,6 +7,7 @@ import {
   ChevronUpIcon,
   QuestionIcon,
 } from "@chakra-ui/icons";
+import { clear } from "idb-keyval";
 
 export default function RoutineEssentialsList({
   cart,
@@ -61,7 +62,6 @@ export default function RoutineEssentialsList({
 
     Object.entries(routineEssentials).map((entry, index) => {
       const [id] = entry;
-      console.log(cart[id]);
       if (cart[id] !== null && cart[id] !== undefined) {
         newCheckedItems[index] = true;
       }
@@ -168,11 +168,12 @@ export default function RoutineEssentialsList({
             {Object.entries(routineEssentials)
               .slice(0, routineIsCollapsed ? 3 : routineEssentials.length)
               .map((entry, index) => {
-                const [id] = entry;
+                const id = entry[1][0];
                 const item = ITEMS_MAP.get(id);
                 if (item == null) {
                   return null;
                 }
+                console.log(entry);
                 return (
                   <Checkbox
                     key={id}

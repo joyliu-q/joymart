@@ -5,10 +5,12 @@ import CartResult from "../components/Cart/CartResult";
 import CartSidebar from "../components/Cart/CartSidebar";
 
 export default function Cart({
+  isModal = false,
   cart,
   routineEssentials,
   setCart,
 }: {
+  isModal?: boolean;
   cart: Record<string, { count: number }>;
   routineEssentials: RoutineEssentialItem[];
   setCart: React.Dispatch<
@@ -16,8 +18,15 @@ export default function Cart({
   >;
 }): React.ReactElement {
   return (
-    <Grid templateColumns="repeat(12, 1fr)" gap={3} px={4}>
-      <GridItem colSpan={8} pr={4} pt={6}>
+    <Grid templateColumns="repeat(12, 1fr)" gap={3}>
+      <GridItem
+        colSpan={8}
+        px={4}
+        pt={6}
+        overflow="scroll"
+        maxHeight={isModal ? "calc(100vh - 120px)" : "100vh"}
+        bgColor="pink.100"
+      >
         <CartResult
           cart={cart}
           setCart={setCart}
@@ -27,10 +36,9 @@ export default function Cart({
       <GridItem
         display="flex"
         flexDirection="column"
-        height="calc(100vh - 60px)"
+        height={isModal ? "calc(100vh - 120px)" : "calc(100vh - 60px)"}
         colSpan={4}
-        borderLeft={`2px solid gray`}
-        pl={4}
+        px={4}
         pt={6}
         position="sticky"
         top="60px"

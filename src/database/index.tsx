@@ -12,6 +12,15 @@ import { get, update } from "idb-keyval";
 import ITEMS from "../database/items";
 import { ItemDetails } from "../constants/item";
 
+export async function tourIsShown({ tourName }: { tourName: string }) {
+  const value = await get(tourName);
+  console.log(value);
+  if (value === true) {
+    return true;
+  }
+  return false;
+}
+
 function returnAllItems(): Map<string, ItemDetails> {
   /*
   itemTable - Map of all items sold in Joyment

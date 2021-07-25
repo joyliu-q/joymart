@@ -1,4 +1,4 @@
-import { Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { Center, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 
 import React from "react";
 import Rating from "react-rating";
@@ -6,12 +6,25 @@ import { ItemDetails } from "../../constants/item";
 
 //TODO this bronken
 export default function ExploreSidebar({
-  itemSelected,
+  itemSelected = null,
 }: {
-  itemSelected: ItemDetails;
+  itemSelected?: ItemDetails | null;
 }): React.ReactElement {
+  if (itemSelected == null) {
+    return (
+      <Center bgColor="white" minHeight="250px" p={8}>
+        <Image boxSize="100px" src="/graphics/martha.svg" mr="20px" />
+        <Flex flexDir="column" textAlign="left">
+          <Heading as="h5" size="md" fontWeight={500} mb={2}>
+            You haven't selected any items yet
+          </Heading>
+          <Text>Click on an item to see more details!</Text>
+        </Flex>
+      </Center>
+    );
+  }
   return (
-    <>
+    <Flex flexDir="column" bgColor="white" minHeight="150px" p={8}>
       <Flex>
         <Image src={itemSelected.image} boxSize="100px" mr={4} />
         <Flex
@@ -62,6 +75,6 @@ export default function ExploreSidebar({
         </Heading>
         <Text textAlign="left">{itemSelected.details.description}</Text>
       </Stack>
-    </>
+    </Flex>
   );
 }

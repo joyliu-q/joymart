@@ -16,4 +16,5 @@ export interface ItemDetails extends ItemBase {
     description: string;
   };
   inventory: number;
+  category: string;
 }
