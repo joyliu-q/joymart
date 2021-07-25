@@ -110,8 +110,7 @@ export default function CartSidebar({
               <Text>
                 Joymart is an imaginary online shopping platform where I
                 explored bringing the personal touch of in-person shopping into
-                the virtual experience, including <b>exploration</b> and{" "}
-                <b>interaction</b>.
+                a convenient virtual experience.
               </Text>
               {/* <Text>This includes:</Text>
             <UnorderedList>
