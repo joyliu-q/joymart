@@ -50,7 +50,7 @@ function App() {
               />
             </Route>
             {Object.values(Categories).map((category) => (
-              <Route path={`/explore/${category}`}>
+              <Route path={`/explore/${category}`} key={category}>
                 <Category
                   category={category}
                   cart={cart}
