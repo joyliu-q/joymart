@@ -22,6 +22,42 @@ import {
 } from "@chakra-ui/icons";
 import { RiShoppingCart2Fill } from "react-icons/ri";
 
+interface NavItem {
+  label: string;
+  subLabel?: string;
+  children?: Array<NavItem>;
+  href?: string;
+}
+
+const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: "Explore",
+    children: [
+      {
+        label: "Layout Map",
+        href: "/explore",
+      },
+      {
+        label: "Explore All Items",
+        href: "/explore/all",
+      },
+      {
+        label: "View My Routine Essentials",
+        href: "/cart",
+      },
+    ],
+  },
+  {
+    label: "About",
+    children: [
+      {
+        label: "Credits",
+        href: "/credits",
+      },
+    ],
+  },
+];
+
 export default function Navbar(): React.ReactElement {
   const { isOpen, onToggle } = useDisclosure();
 
@@ -239,7 +275,6 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           />
         )}
       </Flex>
-
       <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
         <Stack
           mt={2}
@@ -260,39 +295,3 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     </Stack>
   );
 };
-
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-}
-
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "Explore",
-    children: [
-      {
-        label: "Layout Map",
-        href: "/explore",
-      },
-      {
-        label: "Explore All Items",
-        href: "/explore/all",
-      },
-      {
-        label: "View My Routine Essentials",
-        href: "/cart",
-      },
-    ],
-  },
-  {
-    label: "About",
-    children: [
-      {
-        label: "Credits",
-        href: "/credits",
-      },
-    ],
-  },
-];

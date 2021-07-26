@@ -9,6 +9,7 @@ export default function ExploreSidebar({
 }: {
   itemSelected?: ItemDetails | null;
 }): React.ReactElement {
+  // Empty view of the explore sidebar
   if (itemSelected == null) {
     return (
       <Center bgColor="white" minHeight="250px" p={8}>
@@ -22,6 +23,7 @@ export default function ExploreSidebar({
       </Center>
     );
   }
+  // Nonempty view of the explore sidebar - when item is selected
   return (
     <Flex flexDir="column" bgColor="white" minHeight="150px" p={8}>
       <Flex>
@@ -67,7 +69,6 @@ export default function ExploreSidebar({
           </Flex>
         </Flex>
       </Flex>
-
       <Stack spacing={2} my={5}>
         <Heading as="h5" size="sm" textAlign="left">
           About This Item

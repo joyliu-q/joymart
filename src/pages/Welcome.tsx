@@ -1,6 +1,7 @@
 import HomeTour from "../components/Explore/HomeTour";
 import Map from "../components/Explore/Map";
 
+// Layout Map
 export default function Welcome() {
   return (
     <>

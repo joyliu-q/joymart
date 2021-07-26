@@ -55,12 +55,10 @@ export default function Category({
   category,
   cart,
   routineEssentials,
-  setCart,
 }: {
   category: Categories;
   cart: CartItems;
   routineEssentials: RoutineEssentialItems;
-  setCart: React.Dispatch<React.SetStateAction<CartItems>>;
 }): React.ReactElement {
   const [items, setItems] = React.useState<string[]>([]);
   const [itemSelected, setItemSelected] =

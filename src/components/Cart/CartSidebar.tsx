@@ -25,7 +25,7 @@ import React from "react";
 import RoutineEssentialsList from "./RoutineEssentialsList";
 import Confetti from "react-confetti";
 
-const palette = [
+const CONFETTI_COLORS = [
   "#FF8DA9",
   "#FF8086",
   "#7AD0DF",
@@ -91,16 +91,16 @@ export default function CartSidebar({
           />
           <Button
             size="lg"
-            bg="#71AFC4"
+            bg="blue.500"
             color="white"
             minHeight={16}
             width="100%"
             fontSize={24}
             _hover={{
-              bg: "#78EAC4",
+              bg: "teal.400",
             }}
           >
-            Continue to check out
+            <Text fontSize="lg">Continue to check out</Text>
           </Button>
         </Flex>
       </Stack>
@@ -111,7 +111,7 @@ export default function CartSidebar({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <Flex zIndex={3}>
-          <Confetti colors={palette} />
+          <Confetti colors={CONFETTI_COLORS} />
         </Flex>
         <ModalContent position="fixed" top="calc(50% - 300px)" p={4}>
           <ModalHeader>
@@ -142,6 +142,7 @@ export default function CartSidebar({
               <Text>
                 You can learn more about Joymart and my development process{" "}
                 <Link
+                  target="_blank"
                   href="https://github.com/joyliu-q/joymart"
                   textDecor="underline"
                 >
@@ -154,6 +155,7 @@ export default function CartSidebar({
           <ModalFooter>
             <Button
               as="a"
+              target="_blank"
               href="https://github.com/joyliu-q/joymart"
               variant="ghost"
             >

@@ -1,27 +1,16 @@
 import {
   Box,
   Center,
-  useColorModeValue,
   Heading,
   Text,
   Stack,
   Image,
   Flex,
   Input,
-  IconButton,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  ButtonGroup,
   Button,
 } from "@chakra-ui/react";
 import { ItemDetails } from "../../constants/item";
 import Rating from "react-rating";
-import { RiDeleteBin5Fill } from "react-icons/ri";
 import React from "react";
 import {
   CartItems,
@@ -30,6 +19,7 @@ import {
   useRoutineEssentals,
 } from "../../database/";
 import { PlusSquareIcon, SmallCloseIcon } from "@chakra-ui/icons";
+import ConfirmDeletePopover from "./ConfirmDeletePopover";
 
 export default function ItemRow({
   item,
@@ -46,17 +36,20 @@ export default function ItemRow({
   routineEssentials: RoutineEssentialItems;
   hideOnDelete?: boolean;
 }) {
+  // Helper functions manipulating local database
   const { get: getCart, add: addToCart, remove: removeFromCart } = useCart();
   const { add: addToRoutineEssentals, remove: removeFromRoutineEssentals } =
     useRoutineEssentals();
   const isCartPage: boolean = count !== null && count !== undefined;
-  const [confirmDeleteOpen, setConfirmDeleteOpen] = React.useState(false);
 
+  // Banners for adding & removing item
   const [showAddedBanner, setShowAddedBanner] = React.useState(false);
   const [showDeletedBanner, setShowDeletedBanner] = React.useState(false);
 
+  // # of items purchasing
   const [itemCount, setItemCount] = React.useState(1);
 
+  // Checks whether item is inCart & inRoutineEssentials, used for button toggles
   const [inCart, setInCart] = React.useState(
     cart[`${item.id}`] !== null && cart[`${item.id}`] !== undefined
   );
@@ -65,10 +58,10 @@ export default function ItemRow({
       routineEssentials[`${item.id}`] !== undefined
   );
 
+  // Add/remove item
   const toggleItemInCart = () => {
     if (inCart) {
       removeFromCart({ itemId: item.id });
-      setConfirmDeleteOpen(false);
       setShowDeletedBanner(true);
 
       let newCart = cart;
@@ -97,8 +90,7 @@ export default function ItemRow({
     }
   };
 
-  const bgColor = useColorModeValue("white", "gray.800");
-
+  // Modify # of items purchased
   const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItemCount(parseInt(e.target.value) ?? 1);
     if (isCartPage) {
@@ -119,7 +111,7 @@ export default function ItemRow({
     }
   }, [cart, routineEssentials]);
 
-  // Make cart & routineEssential data up to date
+  // Make cart data up to date (TODO: routine essential support consistency?)
   React.useEffect(() => {
     async function refreshData() {
       const cartData = (await getCart()) ?? {};
@@ -160,7 +152,7 @@ export default function ItemRow({
             p={6}
             width={"100%"}
             w={"full"}
-            bg={bgColor}
+            bg={"white"}
             boxShadow={"2xl"}
             rounded={"lg"}
             pos={"relative"}
@@ -205,48 +197,10 @@ export default function ItemRow({
             <Stack textAlign="left" width="100%">
               <Flex flexDirection="row-reverse">
                 {isCartPage ? (
-                  <Popover
-                    returnFocusOnClose={false}
-                    autoFocus={false}
-                    isOpen={confirmDeleteOpen}
-                    onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
-                    placement="right"
-                    closeOnBlur={false}
-                  >
-                    <PopoverTrigger>
-                      <IconButton
-                        variant="ghost"
-                        aria-label="Call Sage"
-                        fontSize="32px"
-                        icon={<RiDeleteBin5Fill />}
-                        onClick={() => setConfirmDeleteOpen(!confirmDeleteOpen)}
-                      />
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <PopoverHeader fontWeight="semibold">
-                        Confirmation
-                      </PopoverHeader>
-                      <PopoverArrow />
-                      <PopoverBody>
-                        Are you sure you want to remove this item from cart?
-                      </PopoverBody>
-                      <PopoverFooter d="flex" justifyContent="flex-end">
-                        <ButtonGroup size="sm">
-                          <Button
-                            variant="outline"
-                            onClick={() =>
-                              setConfirmDeleteOpen(!confirmDeleteOpen)
-                            }
-                          >
-                            Cancel
-                          </Button>
-                          <Button colorScheme="red" onClick={toggleItemInCart}>
-                            Remove
-                          </Button>
-                        </ButtonGroup>
-                      </PopoverFooter>
-                    </PopoverContent>
-                  </Popover>
+                  <ConfirmDeletePopover
+                    removeFrom="cart"
+                    onConfirm={toggleItemInCart}
+                  />
                 ) : null}
                 <Input
                   defaultValue={count}
@@ -327,62 +281,10 @@ export default function ItemRow({
                       : "Add to Routine Essentials"}
                   </Button>
                   {isCartPage ? null : inCart ? (
-                    <Popover
-                      returnFocusOnClose={false}
-                      autoFocus={false}
-                      isOpen={confirmDeleteOpen}
-                      onClose={() => setConfirmDeleteOpen(confirmDeleteOpen)}
-                      placement="right"
-                      closeOnBlur={false}
-                    >
-                      <PopoverTrigger>
-                        <Button
-                          variant={"ghost"}
-                          bgColor={"grey.100"}
-                          color={"gray.400"}
-                          _hover={{
-                            bgColor: "grey.100",
-                            color: "red",
-                          }}
-                          _active={{
-                            bgColor: "none",
-                          }}
-                          _focus={{ border: "none" }}
-                          onClick={() =>
-                            setConfirmDeleteOpen(!confirmDeleteOpen)
-                          }
-                        >
-                          Remove from Cart
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <PopoverHeader fontWeight="semibold">
-                          Confirmation
-                        </PopoverHeader>
-                        <PopoverArrow />
-                        <PopoverBody>
-                          Are you sure you want to remove this item from cart?
-                        </PopoverBody>
-                        <PopoverFooter d="flex" justifyContent="flex-end">
-                          <ButtonGroup size="sm">
-                            <Button
-                              variant="outline"
-                              onClick={() =>
-                                setConfirmDeleteOpen(!confirmDeleteOpen)
-                              }
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              colorScheme="red"
-                              onClick={toggleItemInCart}
-                            >
-                              Remove
-                            </Button>
-                          </ButtonGroup>
-                        </PopoverFooter>
-                      </PopoverContent>
-                    </Popover>
+                    <ConfirmDeletePopover
+                      removeFrom="cart"
+                      onConfirm={toggleItemInCart}
+                    />
                   ) : (
                     <Button
                       onClick={toggleItemInCart}

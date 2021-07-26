@@ -54,11 +54,7 @@ export default function Cart({
           </TabList>
           <TabPanels bgColor="white">
             <TabPanel width="calc(100vw - 35px)">
-              <CartResult
-                cart={cart}
-                setCart={setCart}
-                routineEssentials={routineEssentials}
-              />
+              <CartResult cart={cart} routineEssentials={routineEssentials} />
             </TabPanel>
             <TabPanel
               width="calc(100vw - 35px)"
@@ -82,11 +78,7 @@ export default function Cart({
         maxHeight={isModal ? "calc(100vh - 120px)" : "100vh"}
         bgColor="#FEF2A8"
       >
-        <CartResult
-          cart={cart}
-          setCart={setCart}
-          routineEssentials={routineEssentials}
-        />
+        <CartResult cart={cart} routineEssentials={routineEssentials} />
       </GridItem>
       <GridItem
         display="flex"

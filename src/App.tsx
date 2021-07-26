@@ -49,70 +49,15 @@ function App() {
                 setCart={setCart}
               />
             </Route>
-            <Route path="/explore/frozen-food">
-              <Category
-                category={Categories.FrozenFood}
-                cart={cart}
-                routineEssentials={routineEssentials}
-                setCart={setCart}
-              />
-            </Route>
-            <Route path="/explore/fruits">
-              <Category
-                category={Categories.Fruits}
-                cart={cart}
-                routineEssentials={routineEssentials}
-                setCart={setCart}
-              />
-            </Route>
-            <Route path="/explore/vegetables">
-              <Category
-                category={Categories.Vegetables}
-                cart={cart}
-                routineEssentials={routineEssentials}
-                setCart={setCart}
-              />
-            </Route>
-            <Route path="/explore/general">
-              <Category
-                category={Categories.General}
-                cart={cart}
-                routineEssentials={routineEssentials}
-                setCart={setCart}
-              />
-            </Route>
-            <Route path="/explore/furniture">
-              <Category
-                category={Categories.Furniture}
-                cart={cart}
-                routineEssentials={routineEssentials}
-                setCart={setCart}
-              />
-            </Route>
-            <Route path="/explore/electronics">
-              <Category
-                category={Categories.Electronics}
-                cart={cart}
-                routineEssentials={routineEssentials}
-                setCart={setCart}
-              />
-            </Route>
-            <Route path="/explore/clothes">
-              <Category
-                category={Categories.Clothes}
-                cart={cart}
-                routineEssentials={routineEssentials}
-                setCart={setCart}
-              />
-            </Route>
-            <Route path="/explore/all">
-              <Category
-                category={Categories.All}
-                cart={cart}
-                routineEssentials={routineEssentials}
-                setCart={setCart}
-              />
-            </Route>
+            {Object.values(Categories).map((category) => (
+              <Route path={`/explore/${category}`}>
+                <Category
+                  category={category}
+                  cart={cart}
+                  routineEssentials={routineEssentials}
+                />
+              </Route>
+            ))}
             <Route path="/explore">
               <Welcome />
             </Route>

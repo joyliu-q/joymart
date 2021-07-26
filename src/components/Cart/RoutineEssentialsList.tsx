@@ -12,7 +12,6 @@ import {
   ChevronUpIcon,
   QuestionIcon,
 } from "@chakra-ui/icons";
-import { clear } from "idb-keyval";
 
 export default function RoutineEssentialsList({
   cart,
@@ -21,12 +20,13 @@ export default function RoutineEssentialsList({
   cart: CartItems;
   routineEssentials: RoutineEssentialItems;
 }): React.ReactElement {
+  // Initialize variables
   const [routineIsCollapsed, setRoutineIsCollapsed] = React.useState(true);
+  const [checkedItems, setCheckedItems] = React.useState<
+    Record<string, boolean>
+  >({});
 
-  const checked: Record<string, boolean> = {};
-
-  const [checkedItems, setCheckedItems] = React.useState(checked);
-
+  // Mark items already in cart as checked
   React.useEffect(() => {
     const checked: Record<string, boolean> = {};
     Object.entries(cart).forEach((entry) => {
@@ -36,16 +36,18 @@ export default function RoutineEssentialsList({
 
     setCheckedItems(checked);
   }, [cart]);
-  const { add: addToCart } = useCart();
 
+  // Create helper functions specific for single add
+  const { add: addToCart } = useCart();
   const addItemToCart = (id: string) => {
     addToCart({ itemId: parseInt(id) ?? -1, count: 1 });
   };
 
   const handleAddSelectedToCart = () => {
+    // Check # of selected items. If all items are checked, we can just add all to cart instead of iterating & checking each elemeent.
     if (
-      numOfCheckedItems() === 0 ||
-      numOfCheckedItems() === routineEssentials.length
+      returnNumOfCheckedItems() === 0 ||
+      returnNumOfCheckedItems() === routineEssentials.length
     ) {
       Object.entries(routineEssentials).forEach((entry) => {
         const [id] = entry;
@@ -62,7 +64,8 @@ export default function RoutineEssentialsList({
     window.location.reload();
   };
 
-  const numOfCheckedItems = () => {
+  // Return the # of items that are checked
+  const returnNumOfCheckedItems = () => {
     let count = 0;
     Object.entries(checkedItems).forEach((entry) => {
       const [_id, checked] = entry;
@@ -74,135 +77,139 @@ export default function RoutineEssentialsList({
   };
 
   return (
-    <>
+    <Flex
+      flexDir="column"
+      alignItems="flex-start"
+      bgColor="orange.100"
+      minHeight={routineIsCollapsed ? 12 : "calc(100% - 75px)"}
+      width="100%"
+      position="absolute"
+      pt={8}
+      pb={12}
+      bottom={0}
+      transition="all .3s ease"
+      _hover={{
+        pb: routineIsCollapsed ? 24 : 12,
+        cursor: "pointer",
+      }}
+      onClick={() => setRoutineIsCollapsed(!routineIsCollapsed)}
+    >
       <Flex
         flexDir="column"
-        alignItems="flex-start"
-        bgColor="orange.100"
-        minHeight={routineIsCollapsed ? 12 : "calc(100% - 75px)"}
+        bgColor="white"
+        position="relative"
+        top="-115px"
         width="100%"
-        position="absolute"
-        pt={8}
-        pb={12}
-        bottom={0}
-        transition="all .3s ease"
-        _hover={{
-          pb: routineIsCollapsed ? 24 : 12,
-          cursor: "pointer",
-        }}
-        onClick={() => setRoutineIsCollapsed(!routineIsCollapsed)}
       >
-        <Flex
-          flexDir="column"
-          bgColor="white"
-          position="relative"
-          top="-115px"
-          width="100%"
-        >
-          <Heading as="h3" textAlign="center">
-            Routine Essentials
-          </Heading>
+        <Heading as="h3" textAlign="center">
+          Routine Essentials
+        </Heading>
+        {/* Expanding routine essentials & add-all button */}
+        {Object.entries(routineEssentials).length === 0 ? null : (
           <Flex
             flexDir="row"
             justifyContent={
-              routineEssentials.length === 0 ? "flex-end" : "space-between"
+              Object.entries(routineEssentials).length === 0
+                ? "flex-end"
+                : "space-between"
             }
           >
-            {routineEssentials.length === 0 ? null : (
-              <Button
-                variant="ghost"
-                _hover={{ bgColor: "none", color: "blue.500" }}
-                leftIcon={<AddIcon />}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddSelectedToCart();
-                }}
-              >
-                <b>
-                  Add{" "}
-                  {numOfCheckedItems() === routineEssentials.length ||
-                  numOfCheckedItems() === 0
-                    ? "All "
-                    : `${numOfCheckedItems()} Items `}
-                  to Cart
-                </b>
-              </Button>
-            )}
+            <Button
+              variant="ghost"
+              _hover={{ bgColor: "none", color: "blue.500" }}
+              leftIcon={<AddIcon />}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddSelectedToCart();
+              }}
+            >
+              <b>
+                Add{" "}
+                {returnNumOfCheckedItems() ===
+                  Object.entries(routineEssentials).length ||
+                returnNumOfCheckedItems() === 0
+                  ? "All "
+                  : `${returnNumOfCheckedItems()} Items `}
+                to Cart
+              </b>
+            </Button>
             {routineIsCollapsed ? (
               <ChevronDownIcon w={10} h={10} />
             ) : (
               <ChevronUpIcon w={10} h={10} />
             )}
           </Flex>
-        </Flex>
-        <Box
-          width={0}
-          height={0}
-          borderBottom="50px solid #FEB2B2"
-          borderRight="50px solid transparent"
-          position="absolute"
-          top={0}
-          right={0}
-        />
-        <Box
-          width={0}
-          height={0}
-          borderTop="50px solid white"
-          borderLeft="50px solid transparent"
-          position="absolute"
-          top={0}
-          right={0}
-        />
-
-        {routineEssentials.length < 1 ? (
-          <Flex
-            flexDirection="column"
-            justifyContent="flex-start"
-            width="100%"
-            position="absolute"
-            top={"20px"}
-            right={0}
-          >
-            <Text mb={4}>Got items? Add them to Routine Essentials!</Text>
-            <Button size="sm" variant="link" leftIcon={<QuestionIcon />}>
-              What are Routine Essentials?
-            </Button>
-          </Flex>
-        ) : (
-          <>
-            {Object.entries(routineEssentials)
-              .slice(
-                0,
-                routineIsCollapsed
-                  ? Math.min(3, Object.keys(routineEssentials).length)
-                  : Object.keys(routineEssentials).length
-              )
-              .map((entry, index) => {
-                const [id] = entry;
-                const item = ITEMS_MAP.get(id);
-                if (item == null) {
-                  return null;
-                }
-                return (
-                  <Checkbox
-                    key={id}
-                    isChecked={checkedItems[`${id}`]}
-                    onChange={(e) => {
-                      e.stopPropagation();
-                      let checkedItemsCopy = checkedItems;
-                      checkedItemsCopy[index] = e.target.checked;
-                      setCheckedItems(checkedItemsCopy);
-                    }}
-                    mx={5}
-                    textAlign="left"
-                  >
-                    Add {item.name}
-                  </Checkbox>
-                );
-              })}
-          </>
         )}
       </Flex>
-    </>
+      {/* Dogear style */}
+      <Box
+        width={0}
+        height={0}
+        borderBottom="50px solid #FEB2B2"
+        borderRight="50px solid transparent"
+        position="absolute"
+        top={0}
+        right={0}
+      />
+      <Box
+        width={0}
+        height={0}
+        borderTop="50px solid white"
+        borderLeft="50px solid transparent"
+        position="absolute"
+        top={0}
+        right={0}
+      />
+      {/* Empty View of Routine Essentials List */}
+      {Object.entries(routineEssentials).length === 0 ? (
+        <Flex
+          flexDirection="column"
+          justifyContent="flex-start"
+          width="100%"
+          position="absolute"
+          top={"20px"}
+          right={0}
+        >
+          <Text mb={4}>Got items? Add them to Routine Essentials!</Text>
+          <Button size="sm" variant="link" leftIcon={<QuestionIcon />}>
+            What are Routine Essentials?
+          </Button>
+        </Flex>
+      ) : (
+        <>
+          {/* Nonempty View of Routine Essentials List */}
+          {Object.entries(routineEssentials)
+            .slice(
+              0,
+              routineIsCollapsed
+                ? Math.min(3, Object.keys(routineEssentials).length)
+                : Object.keys(routineEssentials).length
+            )
+            .map((entry, index) => {
+              const [id] = entry;
+              const item = ITEMS_MAP.get(id);
+              if (item == null) {
+                return null;
+              }
+              return (
+                <Checkbox
+                  key={id}
+                  isChecked={checkedItems[`${id}`]}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    let checkedItemsCopy = checkedItems;
+                    checkedItemsCopy[index] = e.target.checked;
+                    setCheckedItems(checkedItemsCopy);
+                  }}
+                  mx={5}
+                  textAlign="left"
+                >
+                  Add {item.name}
+                </Checkbox>
+              );
+            })}
+        </>
+      )}
+    </Flex>
   );
 }

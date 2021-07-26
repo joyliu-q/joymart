@@ -11,6 +11,7 @@ import {
   UnorderedList,
 } from "@chakra-ui/layout";
 
+// About Joymart & Give Credits to Assets
 export default function Credits() {
   return (
     <Box bgColor="#FEF2A8">
@@ -43,7 +44,7 @@ export default function Credits() {
                 textAlign="center"
                 textTransform="uppercase"
               >
-                Website Credits:
+                Website Assets:
               </Text>
               <UnorderedList>
                 <ListItem mx={8}>

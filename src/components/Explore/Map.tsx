@@ -15,9 +15,9 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
+// TODO: fix responsiveness, combine modal view & nonmodal view into 1 type of style, & add 3d map
 export default function Map({ isModal = false }: { isModal?: boolean }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <>
       {isModal ? (

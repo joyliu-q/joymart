@@ -58,7 +58,7 @@ export default function HomeTour() {
 
 const steps = [
   {
-    selector: ".first-step",
+    selector: ".step",
     content: (
       <Flex pt="20px">
         <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
@@ -107,7 +107,7 @@ const steps = [
     },
   },
   {
-    selector: ".third-step",
+    selector: ".step",
     content: () => (
       <Flex pt="20px">
         <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
@@ -311,7 +311,7 @@ const steps = [
     },
   },
   {
-    selector: ".conclusion-two",
+    selector: ".step",
     content: () => (
       <Flex pt="20px">
         <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />

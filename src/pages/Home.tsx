@@ -13,10 +13,12 @@ import React from "react";
 import Typed from "typed.js";
 
 export default function Home() {
+  // Create reference to store the Typed wrapper
   const el = React.useRef(null as any);
   // Create reference to store the Typed instance itself
   const typed = React.useRef(null as any);
 
+  // TODO: add more languages?
   React.useEffect(() => {
     const options = {
       strings: [

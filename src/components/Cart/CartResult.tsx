@@ -10,11 +10,9 @@ import React from "react";
 export default function CartResult({
   cart,
   routineEssentials,
-  setCart,
 }: {
   cart: CartItems;
   routineEssentials: RoutineEssentialItems;
-  setCart: React.Dispatch<React.SetStateAction<CartItems>>;
 }): React.ReactElement {
   return (
     <>
