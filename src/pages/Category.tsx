@@ -114,6 +114,7 @@ export default function Category({
           align="end"
           px={4}
           pt={6}
+          minHeight="calc(100vh - 60px)"
         >
           <TabList>
             <Tab

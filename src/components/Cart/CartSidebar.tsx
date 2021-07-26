@@ -23,6 +23,16 @@ import {
 } from "../../database/index";
 import React from "react";
 import RoutineEssentialsList from "./RoutineEssentialsList";
+import Confetti from "react-confetti";
+
+const palette = [
+  "#FF8DA9",
+  "#FF8086",
+  "#7AD0DF",
+  "#FFE266",
+  "#D3E080",
+  "#A183E2",
+];
 
 export default function CartSidebar({
   cart,
@@ -100,6 +110,9 @@ export default function CartSidebar({
       />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
+        <Flex zIndex={3}>
+          <Confetti colors={palette} />
+        </Flex>
         <ModalContent position="fixed" top="calc(50% - 300px)" p={4}>
           <ModalHeader>
             <Heading>Thank you for playing Joymart's demo!</Heading>

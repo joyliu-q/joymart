@@ -30,7 +30,7 @@ export default function Cart({
 
   if (!isLargerThanXl) {
     return (
-      <Flex bgColor="#FEF2A8">
+      <Flex bgColor="#FEF2A8" minHeight="calc(100vh - 60px)">
         <Tabs
           onChange={(index) => setTabIndex(index)}
           variant="enclosed"
