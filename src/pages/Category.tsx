@@ -24,7 +24,7 @@ import ItemRow from "../components/Item/ItemRow";
 import ExploreSidebar from "../components/Explore/ExploreSidebar";
 
 import { ItemDetails } from "../constants/item";
-import Map from "../components/Explore/Map";
+import Map from "../components/Explore/Map/index";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import ShowCartButton from "../components/Explore/ShowCartButton";
 import CategoryTour from "../components/Explore/CategoryTour";
