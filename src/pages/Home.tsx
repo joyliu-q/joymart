@@ -57,6 +57,8 @@ export default function Home() {
       <Flex
         flexDir="column"
         position="absolute"
+        maxWidth="calc(100vw - 40px)"
+        top="80px"
         bottom={{
           base: "calc(50% + 12vh)",
           md: "calc(50% + 14vh)",
@@ -71,7 +73,10 @@ export default function Home() {
         >
           <div className="wrap">
             <div className="type-wrap">
-              <span style={{ whiteSpace: "pre" }} ref={el} />
+              <span
+                style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}
+                ref={el}
+              />
             </div>
           </div>
         </Heading>
