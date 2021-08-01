@@ -19,7 +19,7 @@ import VisMap from "./VisMap";
 // Map wrapper (content varies depending on screen size)
 export default function Map({ isModal = false }: { isModal?: boolean }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isLargerThanMd] = useMediaQuery("(min-width: 48em)");
+  const [isLargerThanLg] = useMediaQuery("(min-width: 64em)");
 
   return (
     <>
@@ -42,7 +42,7 @@ export default function Map({ isModal = false }: { isModal?: boolean }) {
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent
-              bgImage={isLargerThanMd ? "url('/mapLayout.svg')" : ""}
+              bgImage={isLargerThanLg ? "url('/mapLayout.svg')" : ""}
               backgroundRepeat="no-repeat"
               bgSize="90%"
               bgPos="center"
@@ -71,7 +71,7 @@ export default function Map({ isModal = false }: { isModal?: boolean }) {
               <ModalBody
                 p={0} // padding added to override vis.js config
               >
-                {isLargerThanMd ? <NormMap isModal /> : <VisMap />}
+                {isLargerThanLg ? <NormMap isModal /> : <VisMap />}
               </ModalBody>
             </ModalContent>
           </Modal>
@@ -79,7 +79,7 @@ export default function Map({ isModal = false }: { isModal?: boolean }) {
       ) : (
         <Container
           maxW={"8xl"}
-          bgImage={isLargerThanMd ? "url('/mapLayout.svg')" : ""}
+          bgImage={isLargerThanLg ? "url('/mapLayout.svg')" : ""}
           backgroundRepeat="no-repeat"
           bgSize="100%"
           bgPos="center"
@@ -90,7 +90,7 @@ export default function Map({ isModal = false }: { isModal?: boolean }) {
           position="relative"
           p={0} // padding added to override vis.js config
         >
-          {isLargerThanMd ? <NormMap /> : <VisMap />}
+          {isLargerThanLg ? <NormMap /> : <VisMap />}
         </Container>
       )}
     </>
