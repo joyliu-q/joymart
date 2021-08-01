@@ -13,7 +13,6 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import React from "react";
-import { useHistory } from "react-router";
 import { DataSet, Network } from "vis-network/standalone";
 
 // Store sections available
@@ -98,7 +97,6 @@ const EDGES = new DataSet([
 export default function VisMap({ isModal = false }: { isModal?: boolean }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isHover, setIsHover] = React.useState(false);
-  const history = useHistory();
 
   React.useEffect(() => {
     // Create a network to use as the map
@@ -137,7 +135,7 @@ export default function VisMap({ isModal = false }: { isModal?: boolean }) {
         const nodesClicked = event.nodes; // This is an array, we only want the 1st value
         if (nodesClicked.length > 0) {
           const nodeId = nodesClicked[0];
-          history.push(`${NODES.get(nodeId).href}`);
+          window.location.replace(`${NODES.get(nodeId).href}`);
         }
       });
 
@@ -149,7 +147,7 @@ export default function VisMap({ isModal = false }: { isModal?: boolean }) {
         setIsHover(false);
       });
     }
-  }, [history]);
+  }, []);
 
   return (
     <>
