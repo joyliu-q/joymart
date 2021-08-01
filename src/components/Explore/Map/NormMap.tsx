@@ -1,7 +1,74 @@
 import { Link, Center, Image, Tooltip } from "@chakra-ui/react";
+import Particles from "react-particles-js";
+
+const PEOPLE = [
+  "alice",
+  "carl",
+  "jae",
+  "ling",
+  "megan",
+  "nino",
+  "reese",
+  "tiana",
+];
 
 export default function NormMap({ isModal = false }: { isModal?: boolean }) {
-  return <>{isModal ? MapItemsModal : MapItems}</>;
+  return (
+    <>
+      {isModal ? MapItemsModal : MapItems}
+      <Particles
+        width="100vw"
+        height="calc(100vh - 60px)"
+        params={{
+          particles: {
+            number: {
+              value: 20,
+              density: {
+                enable: true,
+              },
+            },
+            line_linked: {
+              enable: false,
+            },
+            move: {
+              speed: 1,
+              out_mode: "out",
+            },
+            shape: {
+              type: ["image", "circle"],
+              image: PEOPLE.map((person) => {
+                return {
+                  src: `/graphics/people/${person}.svg`,
+                  height: 20,
+                  width: 23,
+                };
+              }),
+            },
+            color: {
+              value: ["#EF8BBD", "#FEF2A8", "#78EAC4", "#B2E7F1"],
+            },
+            opacity: {
+              value: 0.9,
+              anim: {
+                enable: true,
+              },
+            },
+            size: {
+              value: 30,
+              random: false,
+              anim: {
+                enable: true,
+                speed: 4,
+                size_min: 10,
+                sync: false,
+              },
+            },
+          },
+          retina_detect: false,
+        }}
+      />
+    </>
+  );
 }
 
 const MapItems = (

@@ -13,6 +13,7 @@ import {
   Heading,
   useMediaQuery,
 } from "@chakra-ui/react";
+
 import NormMap from "./NormMap";
 import VisMap from "./VisMap";
 
