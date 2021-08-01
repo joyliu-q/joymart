@@ -25,7 +25,7 @@ import React from "react";
 import RoutineEssentialsList from "./RoutineEssentialsList";
 import Confetti from "react-confetti";
 
-const CONFETTI_COLORS = [
+export const CONFETTI_COLORS = [
   "#FF8DA9",
   "#FF8086",
   "#7AD0DF",

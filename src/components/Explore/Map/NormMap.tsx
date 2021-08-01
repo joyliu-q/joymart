@@ -1,72 +1,11 @@
 import { Link, Center, Image, Tooltip } from "@chakra-ui/react";
-import Particles from "react-particles-js";
-
-const PEOPLE = [
-  "alice",
-  "carl",
-  "jae",
-  "ling",
-  "megan",
-  "nino",
-  "reese",
-  "tiana",
-];
+import RPG from "../RPG";
 
 export default function NormMap({ isModal = false }: { isModal?: boolean }) {
   return (
     <>
       {isModal ? MapItemsModal : MapItems}
-      <Particles
-        width="100vw"
-        height="calc(100vh - 60px)"
-        params={{
-          particles: {
-            number: {
-              value: 20,
-              density: {
-                enable: true,
-              },
-            },
-            line_linked: {
-              enable: false,
-            },
-            move: {
-              speed: 1,
-              out_mode: "out",
-            },
-            shape: {
-              type: ["image", "circle"],
-              image: PEOPLE.map((person) => {
-                return {
-                  src: `/graphics/people/${person}.svg`,
-                  height: 20,
-                  width: 23,
-                };
-              }),
-            },
-            color: {
-              value: ["#EF8BBD", "#FEF2A8", "#78EAC4", "#B2E7F1"],
-            },
-            opacity: {
-              value: 0.9,
-              anim: {
-                enable: true,
-              },
-            },
-            size: {
-              value: 30,
-              random: false,
-              anim: {
-                enable: true,
-                speed: 4,
-                size_min: 10,
-                sync: false,
-              },
-            },
-          },
-          retina_detect: false,
-        }}
-      />
+      <RPG isModal={isModal} />
     </>
   );
 }
@@ -79,6 +18,7 @@ const MapItems = (
       top="calc(50% - 275px)"
       left="50px"
       className="frozen-food"
+      zIndex={5}
     >
       <Link href="/explore/frozen-food">
         <Image
@@ -98,6 +38,7 @@ const MapItems = (
       bottom="calc(50% - 225px)"
       left="25px"
       className="fruits-and-veggies"
+      zIndex={5}
     >
       <Link href="/explore/fruits">
         <Image
@@ -117,6 +58,7 @@ const MapItems = (
       bottom="calc(50% - 225px)"
       left="250px"
       className="fruits-and-veggies"
+      zIndex={5}
     >
       <Link href="/explore/vegetables">
         <Image
@@ -135,6 +77,7 @@ const MapItems = (
       position="absolute"
       bottom="calc(50% - 30px)"
       className="middle-aisles"
+      zIndex={5}
     >
       <Link href="/explore/general">
         <Image
@@ -154,6 +97,7 @@ const MapItems = (
       bottom="calc(50% + 200px)"
       right="50px"
       className="furniture"
+      zIndex={5}
     >
       <Link href="/explore/furniture">
         <Image
@@ -173,6 +117,7 @@ const MapItems = (
       bottom="calc(50%)"
       right="250px"
       className="electronics"
+      zIndex={5}
     >
       <Link href="/explore/electronics">
         <Image
@@ -192,6 +137,7 @@ const MapItems = (
       bottom="calc(50% - 300px)"
       right="125px"
       className="clothes"
+      zIndex={5}
     >
       <Link href="/explore/clothes">
         <Image
@@ -210,6 +156,7 @@ const MapItems = (
       position="absolute"
       bottom="calc(50% - 325px)"
       className="registers"
+      zIndex={5}
     >
       <Link href="/cart">
         <Tooltip
