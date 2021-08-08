@@ -84,7 +84,7 @@ export default function Home() {
           fontSize={{ base: "md", sm: "xl", md: "2xl" }}
           textShadow="-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white"
         >
-          An interactive online shopping experience
+          An interactive and gamified online shopping experience
         </Text>
       </Flex>
 

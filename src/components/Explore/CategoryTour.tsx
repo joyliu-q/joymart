@@ -37,7 +37,7 @@ export default function CategoryTour({ category }: { category: string }) {
               <Flex>
                 <Image
                   boxSize="100px"
-                  src="/graphics/joy.svg"
+                  src="/graphics/people/joy.svg"
                   mr="20px"
                   className="bounce"
                 />
@@ -73,7 +73,7 @@ export default function CategoryTour({ category }: { category: string }) {
       selector: ".step",
       content: () => (
         <Flex pt="20px">
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Flex flexDirection="column" justifyContent="center">
             <Text>Of course!</Text>
             <Text>
@@ -92,7 +92,7 @@ export default function CategoryTour({ category }: { category: string }) {
       selector: ".items",
       content: () => (
         <Flex pt="20px">
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Flex flexDirection="column" justifyContent="center">
             <Text>On the left, you have the list of items in stock.</Text>
           </Flex>
@@ -107,7 +107,7 @@ export default function CategoryTour({ category }: { category: string }) {
       selector: ".itemMeta",
       content: () => (
         <Flex pt="20px">
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Stack direction="column">
             <Text>
               On the right, you have the list of items you have already added to
@@ -126,7 +126,7 @@ export default function CategoryTour({ category }: { category: string }) {
       selector: ".itemRow",
       content: () => (
         <Flex pt="20px">
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Flex flexDirection="column" justifyContent="center">
             <Text>Each item is represented by a card!</Text>
             <Text>
@@ -145,7 +145,7 @@ export default function CategoryTour({ category }: { category: string }) {
       selector: ".routineEssentials",
       content: () => (
         <Flex pt="20px">
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Stack
             direction="column"
             flexDirection="column"
@@ -171,7 +171,7 @@ export default function CategoryTour({ category }: { category: string }) {
       selector: ".routineEssentials",
       content: () => (
         <Flex pt="20px">
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Stack
             direction="column"
             flexDirection="column"
@@ -194,7 +194,7 @@ export default function CategoryTour({ category }: { category: string }) {
       selector: ".map",
       content: () => (
         <Flex pt="20px">
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Flex flexDirection="column" justifyContent="center">
             <Text>
               If you ever want to quickly jump into another section, simply
@@ -213,7 +213,7 @@ export default function CategoryTour({ category }: { category: string }) {
       content: () => (
         <Flex pt="20px" flexDir="column">
           <Flex>
-            <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+            <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
             <Flex flexDirection="column" justifyContent="center">
               <Text>
                 You can also click the back button to return to where you
@@ -236,7 +236,7 @@ export default function CategoryTour({ category }: { category: string }) {
         const goTo = args.goTo;
         return (
           <Flex pt="20px">
-            <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+            <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
             <Flex flexDirection="column" justifyContent="center">
               <Text>
                 If you ever need me again, you can click the help icon over

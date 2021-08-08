@@ -61,7 +61,7 @@ const steps = [
     selector: ".step",
     content: (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Heading>Hello!</Heading>
           <Text>My name is Joy, and welcome to Joymart!</Text>
@@ -83,7 +83,7 @@ const steps = [
         <Flex pt="20px">
           <Image
             boxSize="100px"
-            src="/graphics/joy.svg"
+            src="/graphics/people/joy.svg"
             mr="20px"
             className="bounce"
           />
@@ -110,7 +110,7 @@ const steps = [
     selector: ".step",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>Alright! Let's do this.</Text>
         </Flex>
@@ -125,7 +125,7 @@ const steps = [
     selector: ".third-step",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>
             Currently, we're in the <b>Layout Map view</b>. What you're seeing
@@ -143,7 +143,7 @@ const steps = [
     selector: ".frozen-food",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>
             In the top left, we have the <b>Frozen Food</b> section!
@@ -161,7 +161,7 @@ const steps = [
     selector: ".fruits-and-veggies",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>
             In the bottom left, we have <b>Fruits</b> &amp; <b>Vegetables</b>!
@@ -182,7 +182,7 @@ const steps = [
     selector: ".middle-aisles",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>
             The bulk of our items sit in the <b>middle aisles</b>. of our store.
@@ -206,7 +206,7 @@ const steps = [
     content: () => (
       <Flex pt="20px" flexDir="column">
         <Flex>
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Flex flexDirection="column" justifyContent="center">
             <Text>
               Want <b>furniture</b>? Pick up some furniture and home decoration
@@ -234,7 +234,7 @@ const steps = [
     selector: ".electronics",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>
             Here we have some <b>electronics</b>.
@@ -251,7 +251,7 @@ const steps = [
     selector: ".clothes",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>
             At the bottom right, you can <b>purchase clothes</b>!
@@ -273,7 +273,7 @@ const steps = [
     selector: ".navigation-instructions",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>
             To navigate to a particular aisle or section mentioned above, you
@@ -296,7 +296,7 @@ const steps = [
     selector: ".registers",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>
             Once you're done, you can click one of the registers at the very
@@ -314,7 +314,7 @@ const steps = [
     selector: ".step",
     content: () => (
       <Flex pt="20px">
-        <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+        <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
         <Flex flexDirection="column" justifyContent="center">
           <Text>And that's it! </Text>
         </Flex>
@@ -333,7 +333,7 @@ const steps = [
       const goTo = args.goTo;
       return (
         <Flex pt="20px">
-          <Image boxSize="100px" src="/graphics/joy.svg" mr="20px" />
+          <Image boxSize="100px" src="/graphics/people/joy.svg" mr="20px" />
           <Flex flexDirection="column" justifyContent="center">
             <Text>
               If you ever need me again, you can click the help icon over here.

@@ -14,6 +14,7 @@ import {
   useRoutineEssentals,
 } from "./database";
 import Credits from "./pages/Credits";
+import Leaderboard from "./pages/Leaderboard";
 
 function App() {
   const [cart, setCart] = React.useState<CartItems>({});
@@ -63,6 +64,9 @@ function App() {
             </Route>
             <Route path="/credits">
               <Credits />
+            </Route>
+            <Route path="/leaderboard">
+              <Leaderboard />
             </Route>
             <Route path="/">
               <Home />

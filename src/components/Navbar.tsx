@@ -20,7 +20,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { RiShoppingCart2Fill } from "react-icons/ri";
+import { RiShoppingCart2Fill, RiTrophyFill } from "react-icons/ri";
 
 interface NavItem {
   label: string;
@@ -108,32 +108,62 @@ export default function Navbar(): React.ReactElement {
           direction={"row"}
           spacing={6}
         >
-          <IconButton
-            as="a"
-            display={{ base: "inline-flex", md: "none" }}
-            href={"/cart"}
-            aria-label="View Cart"
-            color={"white"}
-            bg={"pink.400"}
-            _hover={{
-              bg: "pink.300",
-            }}
-            icon={<Icon as={RiShoppingCart2Fill} />}
-          />
-          <Button
-            as="a"
-            display={{ base: "none", md: "inline-flex" }}
-            fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
-            leftIcon={<Icon as={RiShoppingCart2Fill} />}
-            href={"/cart"}
-            _hover={{
-              bg: "pink.300",
-            }}
-          >
-            View Cart
-          </Button>
+          <>
+            <IconButton
+              as="a"
+              variant="outline"
+              display={{ base: "inline-flex", md: "none" }}
+              href={"/leaderboard"}
+              aria-label="View Leaderboard"
+              color={"orange.400"}
+              borderColor="orange.300"
+              _hover={{
+                color: "orange.300",
+              }}
+              icon={<Icon as={RiTrophyFill} />}
+            />
+            <Button
+              as="a"
+              variant="outline"
+              display={{ base: "none", md: "inline-flex" }}
+              fontWeight={600}
+              color="orange.400"
+              borderColor="orange.300"
+              leftIcon={<Icon as={RiTrophyFill} />}
+              href={"/leaderboard"}
+              _hover={{
+                color: "orange.300",
+              }}
+            >
+              Leaderboard
+            </Button>
+            <IconButton
+              as="a"
+              display={{ base: "inline-flex", md: "none" }}
+              href={"/cart"}
+              aria-label="View Cart"
+              color={"white"}
+              bg={"pink.400"}
+              _hover={{
+                bg: "pink.300",
+              }}
+              icon={<Icon as={RiShoppingCart2Fill} />}
+            />
+            <Button
+              as="a"
+              display={{ base: "none", md: "inline-flex" }}
+              fontWeight={600}
+              color={"white"}
+              bg={"pink.400"}
+              leftIcon={<Icon as={RiShoppingCart2Fill} />}
+              href={"/cart"}
+              _hover={{
+                bg: "pink.300",
+              }}
+            >
+              View Cart
+            </Button>
+          </>
         </Stack>
       </Flex>
 

@@ -67,6 +67,25 @@ export default function Credits() {
                   .
                 </ListItem>
                 <ListItem mx={8}>
+                  Placeholder images by{" "}
+                  <Link
+                    fontWeight={600}
+                    href="https://www.unsplash.com"
+                    title="unsplash"
+                  >
+                    Unsplash
+                  </Link>{" "}
+                  from{" "}
+                  <Link
+                    fontWeight={600}
+                    href="https://www.unsplash.com/"
+                    title="unsplash"
+                  >
+                    www.unsplash.com
+                  </Link>
+                  .
+                </ListItem>
+                <ListItem mx={8}>
                   Shop items provided by{" "}
                   <Link fontWeight={600} href="walmart.com" title="Freepik">
                     Walmart

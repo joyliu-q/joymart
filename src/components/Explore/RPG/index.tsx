@@ -1,17 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 import Particles from "react-particles-js";
 import Character from "./Character";
-
-const PEOPLE = [
-  "alice",
-  "carl",
-  "jae",
-  "ling",
-  "megan",
-  "nino",
-  "reese",
-  "tiana",
-];
+import { PEOPLE } from "./helpers";
 
 export default function RPG({ isModal = false }: { isModal?: boolean }) {
   return (
