@@ -272,7 +272,6 @@ export default function CategoryTour({ category }: { category: string }) {
           }}
         />
       </Flex>
-
       <Flex position="absolute" bottom="20px" right="20px">
         <IconButton
           className="help-button"

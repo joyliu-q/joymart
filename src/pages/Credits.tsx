@@ -1,4 +1,3 @@
-import { Image } from "@chakra-ui/image";
 import {
   Box,
   Container,
@@ -9,7 +8,8 @@ import {
   Stack,
   Text,
   UnorderedList,
-} from "@chakra-ui/layout";
+  Image,
+} from "@chakra-ui/react";
 
 // About Joymart & Give Credits to Assets
 export default function Credits() {

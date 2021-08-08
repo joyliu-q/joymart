@@ -1,17 +1,36 @@
-import { Box } from "@chakra-ui/layout";
+import { Box, Flex, Icon, IconButton, Tooltip } from "@chakra-ui/react";
+import React from "react";
 import Particles from "react-particles-js";
 import Character from "./Character";
 import { PEOPLE } from "./helpers";
+import { GrFormViewHide } from "react-icons/gr";
+import { BiShowAlt } from "react-icons/bi";
 
 export default function RPG({ isModal = false }: { isModal?: boolean }) {
+  const [showRpg, setShowRpg] = React.useState(false);
   return (
     <Box>
-      <Box position="relative">
-        {PEOPLE.map((name) => (
-          <Character name={name} />
-        ))}
-      </Box>
-
+      {showRpg ? (
+        <Box position="relative">
+          {PEOPLE.map((name) => (
+            <Character name={name} />
+          ))}
+        </Box>
+      ) : null}
+      <Flex position="absolute" bottom="20px" right="30px">
+        <Tooltip label={showRpg ? "Hide characters" : "Show characters"}>
+          <IconButton
+            className="help-button"
+            aria-label="question-icon"
+            icon={<Icon as={showRpg ? BiShowAlt : GrFormViewHide} />}
+            rounded={"full"}
+            px={6}
+            size="lg"
+            zIndex={6}
+            onClick={() => setShowRpg(!showRpg)}
+          />
+        </Tooltip>
+      </Flex>
       {/* Particle Backdrop */}
       <Particles
         width="100vw"

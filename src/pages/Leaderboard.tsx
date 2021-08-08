@@ -1,8 +1,14 @@
-import { Avatar } from "@chakra-ui/avatar";
 import { QuestionIcon } from "@chakra-ui/icons";
-import { Image } from "@chakra-ui/image";
-import { Box, Container, Flex, Stack, Text } from "@chakra-ui/layout";
-import { Tooltip } from "@chakra-ui/tooltip";
+import {
+  Box,
+  Container,
+  Flex,
+  Stack,
+  Text,
+  Avatar,
+  Image,
+  Tooltip,
+} from "@chakra-ui/react";
 
 const LeaderboardUserRow = ({
   name,
